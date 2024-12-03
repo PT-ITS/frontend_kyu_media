@@ -29,7 +29,7 @@ const toggleSidebar = () => {
             <div class="card p-3" style="border-radius: 25px">
               <div class="row mb-3">
                 <div class="col-6">
-                  <div class="h5 font-weight-bold text-black">Beranda</div>
+                  <div class="h5 font-weight-bold text-black">Harga</div>
                 </div>
                 <div class="d-flex justify-content-end col-6">
                   <button
@@ -53,9 +53,9 @@ const toggleSidebar = () => {
                     <tr>
                       <th scope="col" style="width: 50px">No</th>
                       <th scope="col">Aksi</th>
-                      <th scope="col">Header</th>
-                      <th scope="col">Isi</th>
-                      <th scope="col">Footer</th>
+                      <th scope="col">Nama Paket</th>
+                      <th scope="col">Harga</th>
+                      <th scope="col">Isi Paket</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -69,9 +69,9 @@ const toggleSidebar = () => {
                           @click="
                             setDataUpdate(
                               item.id,
-                              item.header,
-                              item.isi,
-                              item.footer
+                              item.nama_paket,
+                              item.isi_paket,
+                              item.harga
                             )
                           "
                         >
@@ -79,14 +79,14 @@ const toggleSidebar = () => {
                         </button>
                         <button
                           class="btn btn-danger me-1 mb-1"
-                          @click="konfirmasi(item.id, item.header)"
+                          @click="konfirmasi(item.id, item.nama_paket)"
                         >
                           <i class="bi bi-trash3-fill"></i>
                         </button>
                       </td>
-                      <td>{{ item.header }}</td>
-                      <td><div v-html="item.isi"></div></td>
-                      <td>{{ item.footer }}</td>
+                      <td>{{ item.nama_paket }}</td>
+                      <td>Rp. {{ item.harga }}</td>
+                      <td><div v-html="item.isi_paket"></div></td>
                     </tr>
                   </tbody>
                 </DataTable>
@@ -130,30 +130,30 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="header">Header</label>
+              <label for="nama_paket">Nama Paket</label>
               <input
                 type="text"
                 class="form-control"
-                id="header"
-                v-model="dataCreate.header"
-                placeholder="Masukkan header"
+                id="nama_paket"
+                v-model="dataCreate.nama_paket"
+                placeholder="Masukkan nama paket"
                 required
               />
             </div>
             <div class="form-group">
-              <label for="isi">Isi</label>
+              <label for="harga">Harga</label>
+              <input
+                type="text"
+                class="form-control"
+                id="harga"
+                v-model="dataCreate.harga"
+                placeholder="Masukkan harga"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="isi">Isi Paket</label>
               <div id="isi_create_editor" style="height: 200px"></div>
-            </div>
-            <div class="form-group">
-              <label for="footer">Footer</label>
-              <input
-                type="text"
-                class="form-control"
-                id="footer"
-                v-model="dataCreate.footer"
-                placeholder="Masukkan footer"
-                required
-              />
             </div>
           </form>
         </div>
@@ -195,28 +195,28 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="header">Header</label>
+              <label for="nama_paket">Nama Paket</label>
               <input
                 type="text"
                 class="form-control"
-                id="header"
-                v-model="dataUpdate.header"
+                id="nama_paket"
+                v-model="dataUpdate.nama_paket"
                 required
               />
             </div>
             <div class="form-group">
-              <label for="isi">Isi</label>
+              <label for="harga">Harga</label>
+              <input
+                type="text"
+                class="form-control"
+                id="harga"
+                v-model="dataUpdate.harga"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="isi">Isi Paket</label>
               <div id="isi_update_editor" style="height: 200px"></div>
-            </div>
-            <div class="form-group">
-              <label for="footer">Footer</label>
-              <input
-                type="text"
-                class="form-control"
-                id="footer"
-                v-model="dataUpdate.footer"
-                required
-              />
             </div>
           </form>
         </div>
@@ -251,15 +251,15 @@ export default {
         // Other DataTables options
       },
       dataCreate: {
-        header: "",
-        isi: "",
-        footer: "",
+        nama_paket: "",
+        isi_paket: "",
+        harga: "",
       },
       dataUpdate: {
         id: "",
-        header: "",
-        isi: "",
-        footer: "",
+        nama_paket: "",
+        isi_paket: "",
+        harga: "",
       },
       ready: false,
     };
@@ -285,7 +285,7 @@ export default {
     });
 
     this.quillCreate.on("text-change", () => {
-      this.dataCreate.isi = this.quillCreate.root.innerHTML;
+      this.dataCreate.isi_paket = this.quillCreate.root.innerHTML;
     });
 
     // Update
@@ -308,25 +308,25 @@ export default {
     });
 
     this.quillUpdate.on("text-change", () => {
-      this.dataUpdate.isi = this.quillUpdate.root.innerHTML;
+      this.dataUpdate.isi_paket = this.quillUpdate.root.innerHTML;
     });
   },
   methods: {
-    setDataUpdate(id, header, isi, footer) {
+    setDataUpdate(id, nama_paket, isi_paket, harga) {
       this.dataUpdate.id = id;
-      this.dataUpdate.header = header;
-      this.dataUpdate.isi = isi;
-      this.quillUpdate.root.innerHTML = this.dataUpdate.isi;
-      this.dataUpdate.footer = footer;
+      this.dataUpdate.nama_paket = nama_paket;
+      this.dataUpdate.isi_paket = isi_paket;
+      this.quillUpdate.root.innerHTML = this.dataUpdate.isi_paket;
+      this.dataUpdate.harga = harga;
     },
     async sendUpdateData() {
       try {
         const formData = new FormData();
-        formData.append("header", this.dataUpdate.header);
-        formData.append("isi", this.dataUpdate.isi);
-        formData.append("footer", this.dataUpdate.footer);
+        formData.append("nama_paket", this.dataUpdate.nama_paket);
+        formData.append("isi_paket", this.dataUpdate.isi_paket);
+        formData.append("harga", this.dataUpdate.harga);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/update/${
+          `${import.meta.env.VITE_API_ENDPOINT}/harga/update/${
             this.dataUpdate.id
           }`,
           formData,
@@ -339,9 +339,9 @@ export default {
         console.log(response.data); // Handle response from server
         this.dataUpdate = {
           id: "",
-          header: "",
-          isi: "",
-          footer: "",
+          nama_paket: "",
+          isi_paket: "",
+          harga: "",
         }; // Clear input field after successful submission
         this.quillUpdate.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
@@ -375,11 +375,11 @@ export default {
     async tambahData() {
       try {
         const formData = new FormData();
-        formData.append("header", this.dataCreate.header);
-        formData.append("isi", this.dataCreate.isi);
-        formData.append("footer", this.dataCreate.footer);
+        formData.append("nama_paket", this.dataCreate.nama_paket);
+        formData.append("isi_paket", this.dataCreate.isi_paket);
+        formData.append("harga", this.dataCreate.harga);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/create`,
+          `${import.meta.env.VITE_API_ENDPOINT}/harga/create`,
           formData,
           {
             headers: {
@@ -389,9 +389,9 @@ export default {
         );
         console.log(response.data); // Handle response from server
         this.dataCreate = {
-          header: "",
-          isi: "",
-          footer: "",
+          nama_paket: "",
+          isi_paket: "",
+          harga: "",
         }; // Clear input field after successful submission
         this.quillCreate.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
@@ -426,7 +426,7 @@ export default {
       this.ready = false;
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/list`,
+          `${import.meta.env.VITE_API_ENDPOINT}/harga/list`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -466,7 +466,7 @@ export default {
     async deleteData(id) {
       try {
         const response = await axios.delete(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/delete/${id}`,
+          `${import.meta.env.VITE_API_ENDPOINT}/harga/delete/${id}`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,

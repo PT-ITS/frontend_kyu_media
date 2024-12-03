@@ -18,6 +18,6 @@ export default {
 
 <style scope>
 .bg-primary {
-  background-color: #0d83fd !important;
+  background-color: #ee0405 !important;
 }
 </style>

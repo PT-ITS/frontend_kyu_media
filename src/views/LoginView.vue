@@ -147,16 +147,7 @@ export default {
 
     const token = sessionStorage.getItem("token"); // Ambil token dari local storage
     if (token) {
-      try {
-        const [headerBase64, signatureBase64] = token.split(".");
-        const header = JSON.parse(atob(headerBase64));
-        const signature = atob(signatureBase64);
-        const tokenPayload = JSON.parse(atob(token.split(".")[1])); // Mendekode bagian payload dari token JWT
-        const role = tokenPayload.role; // Ambil role pengguna dari payload
-      } catch (error) {
-        console.error("Error decoding token:", error);
-        this.$router.push("/login"); // Tindakan jika terjadi kesalahan dekode
-      }
+      this.$router.push("/dashboard");
     } else {
       this.$router.push("/login"); // Tindakan jika token tidak ada (pengguna belum terautentikasi)
     }

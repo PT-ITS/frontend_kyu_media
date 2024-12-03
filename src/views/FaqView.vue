@@ -29,7 +29,7 @@ const toggleSidebar = () => {
             <div class="card p-3" style="border-radius: 25px">
               <div class="row mb-3">
                 <div class="col-6">
-                  <div class="h5 font-weight-bold text-black">Beranda</div>
+                  <div class="h5 font-weight-bold text-black">FAQ</div>
                 </div>
                 <div class="d-flex justify-content-end col-6">
                   <button
@@ -53,9 +53,9 @@ const toggleSidebar = () => {
                     <tr>
                       <th scope="col" style="width: 50px">No</th>
                       <th scope="col">Aksi</th>
-                      <th scope="col">Header</th>
-                      <th scope="col">Isi</th>
-                      <th scope="col">Footer</th>
+                      <th scope="col">Pertanyaan</th>
+                      <th scope="col">Jawaban</th>
+                      <!-- <th scope="col">Footer</th> -->
                     </tr>
                   </thead>
                   <tbody>
@@ -69,9 +69,9 @@ const toggleSidebar = () => {
                           @click="
                             setDataUpdate(
                               item.id,
-                              item.header,
-                              item.isi,
-                              item.footer
+                              item.pertanyaan,
+                              item.jawaban
+                              // item.footer
                             )
                           "
                         >
@@ -79,14 +79,14 @@ const toggleSidebar = () => {
                         </button>
                         <button
                           class="btn btn-danger me-1 mb-1"
-                          @click="konfirmasi(item.id, item.header)"
+                          @click="konfirmasi(item.id, item.pertanyaan)"
                         >
                           <i class="bi bi-trash3-fill"></i>
                         </button>
                       </td>
-                      <td>{{ item.header }}</td>
-                      <td><div v-html="item.isi"></div></td>
-                      <td>{{ item.footer }}</td>
+                      <td>{{ item.pertanyaan }}</td>
+                      <td><div v-html="item.jawaban"></div></td>
+                      <!-- <td>{{ item.footer }}</td> -->
                     </tr>
                   </tbody>
                 </DataTable>
@@ -130,21 +130,21 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="header">Header</label>
+              <label for="pertanyaan">Pertanyaan</label>
               <input
                 type="text"
                 class="form-control"
-                id="header"
-                v-model="dataCreate.header"
-                placeholder="Masukkan header"
+                id="pertanyaan"
+                v-model="dataCreate.pertanyaan"
+                placeholder="Masukkan pertanyaan"
                 required
               />
             </div>
             <div class="form-group">
-              <label for="isi">Isi</label>
-              <div id="isi_create_editor" style="height: 200px"></div>
+              <label for="jawaban">Jawaban</label>
+              <div id="jawaban_create_editor" style="height: 200px"></div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="footer">Footer</label>
               <input
                 type="text"
@@ -154,7 +154,7 @@ const toggleSidebar = () => {
                 placeholder="Masukkan footer"
                 required
               />
-            </div>
+            </div> -->
           </form>
         </div>
         <div class="modal-footer">
@@ -195,20 +195,20 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="header">Header</label>
+              <label for="pertanyaan">Pertanyaan</label>
               <input
                 type="text"
                 class="form-control"
-                id="header"
-                v-model="dataUpdate.header"
+                id="pertanyaan"
+                v-model="dataUpdate.pertanyaan"
                 required
               />
             </div>
             <div class="form-group">
-              <label for="isi">Isi</label>
-              <div id="isi_update_editor" style="height: 200px"></div>
+              <label for="jawaban">Jawaban</label>
+              <div id="jawaban_update_editor" style="height: 200px"></div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="footer">Footer</label>
               <input
                 type="text"
@@ -217,7 +217,7 @@ const toggleSidebar = () => {
                 v-model="dataUpdate.footer"
                 required
               />
-            </div>
+            </div> -->
           </form>
         </div>
         <div class="modal-footer">
@@ -251,24 +251,24 @@ export default {
         // Other DataTables options
       },
       dataCreate: {
-        header: "",
-        isi: "",
-        footer: "",
+        pertanyaan: "",
+        jawaban: "",
+        // footer: "",
       },
       dataUpdate: {
         id: "",
-        header: "",
-        isi: "",
-        footer: "",
+        pertanyaan: "",
+        jawaban: "",
+        // footer: "",
       },
       ready: false,
     };
   },
   mounted() {
     // Create
-    this.quillCreate = new Quill("#isi_create_editor", {
+    this.quillCreate = new Quill("#jawaban_create_editor", {
       theme: "snow",
-      placeholder: "Masukkan isi",
+      placeholder: "Masukkan jawaban",
       modules: {
         toolbar: [
           [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -285,13 +285,13 @@ export default {
     });
 
     this.quillCreate.on("text-change", () => {
-      this.dataCreate.isi = this.quillCreate.root.innerHTML;
+      this.dataCreate.jawaban = this.quillCreate.root.innerHTML;
     });
 
     // Update
-    this.quillUpdate = new Quill("#isi_update_editor", {
+    this.quillUpdate = new Quill("#jawaban_update_editor", {
       theme: "snow",
-      placeholder: "Masukkan isi",
+      placeholder: "Masukkan jawaban",
       modules: {
         toolbar: [
           [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -308,25 +308,30 @@ export default {
     });
 
     this.quillUpdate.on("text-change", () => {
-      this.dataUpdate.isi = this.quillUpdate.root.innerHTML;
+      this.dataUpdate.jawaban = this.quillUpdate.root.innerHTML;
     });
   },
   methods: {
-    setDataUpdate(id, header, isi, footer) {
+    setDataUpdate(
+      id,
+      pertanyaan,
+      jawaban
+      // footer
+    ) {
       this.dataUpdate.id = id;
-      this.dataUpdate.header = header;
-      this.dataUpdate.isi = isi;
-      this.quillUpdate.root.innerHTML = this.dataUpdate.isi;
-      this.dataUpdate.footer = footer;
+      this.dataUpdate.pertanyaan = pertanyaan;
+      this.dataUpdate.jawaban = jawaban;
+      this.quillUpdate.root.innerHTML = this.dataUpdate.jawaban;
+      // this.dataUpdate.footer = footer;
     },
     async sendUpdateData() {
       try {
         const formData = new FormData();
-        formData.append("header", this.dataUpdate.header);
-        formData.append("isi", this.dataUpdate.isi);
-        formData.append("footer", this.dataUpdate.footer);
+        formData.append("pertanyaan", this.dataUpdate.pertanyaan);
+        formData.append("jawaban", this.dataUpdate.jawaban);
+        // formData.append("footer", this.dataUpdate.footer);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/update/${
+          `${import.meta.env.VITE_API_ENDPOINT}/faq/update/${
             this.dataUpdate.id
           }`,
           formData,
@@ -339,9 +344,9 @@ export default {
         console.log(response.data); // Handle response from server
         this.dataUpdate = {
           id: "",
-          header: "",
-          isi: "",
-          footer: "",
+          pertanyaan: "",
+          jawaban: "",
+          // footer: "",
         }; // Clear input field after successful submission
         this.quillUpdate.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
@@ -375,11 +380,11 @@ export default {
     async tambahData() {
       try {
         const formData = new FormData();
-        formData.append("header", this.dataCreate.header);
-        formData.append("isi", this.dataCreate.isi);
-        formData.append("footer", this.dataCreate.footer);
+        formData.append("pertanyaan", this.dataCreate.pertanyaan);
+        formData.append("jawaban", this.dataCreate.jawaban);
+        // formData.append("footer", this.dataCreate.footer);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/create`,
+          `${import.meta.env.VITE_API_ENDPOINT}/faq/create`,
           formData,
           {
             headers: {
@@ -389,9 +394,9 @@ export default {
         );
         console.log(response.data); // Handle response from server
         this.dataCreate = {
-          header: "",
-          isi: "",
-          footer: "",
+          pertanyaan: "",
+          jawaban: "",
+          // footer: "",
         }; // Clear input field after successful submission
         this.quillCreate.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
@@ -416,7 +421,7 @@ export default {
           // Generic error handling if the response doesn't contain validation errors
           this.showError(
             "Opps...",
-            "Terjadi kesalahan saat menambahkan data catpers.",
+            "Terjadi kesalahan saat menambahkan data.",
             "error"
           );
         }
@@ -426,7 +431,7 @@ export default {
       this.ready = false;
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/list`,
+          `${import.meta.env.VITE_API_ENDPOINT}/faq/list`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -466,7 +471,7 @@ export default {
     async deleteData(id) {
       try {
         const response = await axios.delete(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/delete/${id}`,
+          `${import.meta.env.VITE_API_ENDPOINT}/faq/delete/${id}`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,

@@ -87,6 +87,18 @@
       </router-link>
     </li>
 
+    <!-- Nav Item - Tentang Kami -->
+    <li class="nav-item">
+      <router-link
+        class="nav-link text-white"
+        to="/harga"
+        active-class="font-weight-bold"
+      >
+        <i class="bi bi-cash text-white fs-6 me-2"></i>
+        <span class="text-white fs-6">Harga</span>
+      </router-link>
+    </li>
+
     <!-- Nav Item - Syarat Ketentuan -->
     <li class="nav-item">
       <router-link
@@ -132,6 +144,30 @@
       >
         <i class="bi bi-question-circle text-white fs-6 me-2"></i>
         <span class="text-white fs-6">FAQ</span>
+      </router-link>
+    </li>
+
+    <!-- Nav Item - Layanan -->
+    <li class="nav-item">
+      <router-link
+        class="nav-link text-white"
+        to="/layanan"
+        active-class="font-weight-bold"
+      >
+        <i class="bi bi-card-list text-white fs-6 me-2"></i>
+        <span class="text-white fs-6">Layanan</span>
+      </router-link>
+    </li>
+
+    <!-- Nav Item - Kontak -->
+    <li class="nav-item">
+      <router-link
+        class="nav-link text-white"
+        to="/kontak"
+        active-class="font-weight-bold"
+      >
+        <i class="bi bi-telephone text-white fs-6 me-2"></i>
+        <span class="text-white fs-6">Kontak</span>
       </router-link>
     </li>
   </ul>

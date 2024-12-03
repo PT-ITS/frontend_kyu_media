@@ -65,7 +65,7 @@ export default {
         if (new Date() > expDate) {
           console.log("Keluar");
           sessionStorage.removeItem("token");
-          this.$router.push("/");
+          this.$router.push("/login");
         } else {
           console.log("Aman");
         }
@@ -73,10 +73,10 @@ export default {
         // akhir
       } catch (error) {
         console.error("Error decoding token:", error);
-        this.$router.push("/"); // Tindakan jika terjadi kesalahan dekode
+        this.$router.push("/login"); // Tindakan jika terjadi kesalahan dekode
       }
     } else {
-      this.$router.push("/"); // Tindakan jika token tidak ada (pengguna belum terautentikasi)
+      this.$router.push("/login"); // Tindakan jika token tidak ada (pengguna belum terautentikasi)
     }
   },
 };

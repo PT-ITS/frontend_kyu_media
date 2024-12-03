@@ -29,7 +29,9 @@ const toggleSidebar = () => {
             <div class="card p-3" style="border-radius: 25px">
               <div class="row mb-3">
                 <div class="col-6">
-                  <div class="h5 font-weight-bold text-black">Beranda</div>
+                  <div class="h5 font-weight-bold text-black">
+                    Syarat dan Ketentuan
+                  </div>
                 </div>
                 <div class="d-flex justify-content-end col-6">
                   <button
@@ -53,9 +55,9 @@ const toggleSidebar = () => {
                     <tr>
                       <th scope="col" style="width: 50px">No</th>
                       <th scope="col">Aksi</th>
-                      <th scope="col">Header</th>
-                      <th scope="col">Isi</th>
-                      <th scope="col">Footer</th>
+                      <th scope="col">Syarat dan Ketentuan</th>
+                      <!-- <th scope="col">Isi</th> -->
+                      <!-- <th scope="col">Footer</th> -->
                     </tr>
                   </thead>
                   <tbody>
@@ -69,9 +71,9 @@ const toggleSidebar = () => {
                           @click="
                             setDataUpdate(
                               item.id,
-                              item.header,
-                              item.isi,
-                              item.footer
+                              item.syarat
+                              // item.isi
+                              // item.footer
                             )
                           "
                         >
@@ -79,14 +81,14 @@ const toggleSidebar = () => {
                         </button>
                         <button
                           class="btn btn-danger me-1 mb-1"
-                          @click="konfirmasi(item.id, item.header)"
+                          @click="konfirmasi(item.id, item.syarat)"
                         >
                           <i class="bi bi-trash3-fill"></i>
                         </button>
                       </td>
-                      <td>{{ item.header }}</td>
-                      <td><div v-html="item.isi"></div></td>
-                      <td>{{ item.footer }}</td>
+                      <td>{{ item.syarat }}</td>
+                      <!-- <td>{{ item.isi }}</td> -->
+                      <!-- <td>{{ item.footer }}</td> -->
                     </tr>
                   </tbody>
                 </DataTable>
@@ -130,21 +132,21 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="header">Header</label>
+              <label for="syarat">Syarat dan Ketentuan</label>
               <input
                 type="text"
                 class="form-control"
-                id="header"
-                v-model="dataCreate.header"
-                placeholder="Masukkan header"
+                id="syarat"
+                v-model="dataCreate.syarat"
+                placeholder="Masukkan syarat dan ketentuan"
                 required
               />
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="isi">Isi</label>
               <div id="isi_create_editor" style="height: 200px"></div>
-            </div>
-            <div class="form-group">
+            </div> -->
+            <!-- <div class="form-group">
               <label for="footer">Footer</label>
               <input
                 type="text"
@@ -154,7 +156,7 @@ const toggleSidebar = () => {
                 placeholder="Masukkan footer"
                 required
               />
-            </div>
+            </div> -->
           </form>
         </div>
         <div class="modal-footer">
@@ -195,20 +197,20 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="header">Header</label>
+              <label for="syarat">Syarat dan Ketentuan</label>
               <input
                 type="text"
                 class="form-control"
-                id="header"
-                v-model="dataUpdate.header"
+                id="syarat"
+                v-model="dataUpdate.syarat"
                 required
               />
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="isi">Isi</label>
               <div id="isi_update_editor" style="height: 200px"></div>
-            </div>
-            <div class="form-group">
+            </div> -->
+            <!-- <div class="form-group">
               <label for="footer">Footer</label>
               <input
                 type="text"
@@ -217,7 +219,7 @@ const toggleSidebar = () => {
                 v-model="dataUpdate.footer"
                 required
               />
-            </div>
+            </div> -->
           </form>
         </div>
         <div class="modal-footer">
@@ -239,8 +241,8 @@ import Swal from "sweetalert2";
 import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 DataTable.use(DataTablesCore);
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
+// import Quill from "quill";
+// import "quill/dist/quill.snow.css";
 
 export default {
   data() {
@@ -251,82 +253,84 @@ export default {
         // Other DataTables options
       },
       dataCreate: {
-        header: "",
-        isi: "",
-        footer: "",
+        syarat: "",
+        // isi: "",
+        // footer: "",
       },
       dataUpdate: {
         id: "",
-        header: "",
-        isi: "",
-        footer: "",
+        syarat: "",
+        // isi: "",
+        // footer: "",
       },
       ready: false,
     };
   },
   mounted() {
     // Create
-    this.quillCreate = new Quill("#isi_create_editor", {
-      theme: "snow",
-      placeholder: "Masukkan isi",
-      modules: {
-        toolbar: [
-          [{ header: "1" }, { header: "2" }, { font: [] }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ align: [] }],
-          ["bold", "italic", "underline"],
-          ["link"],
-          ["blockquote", "code-block"],
-          [{ color: [] }, { background: [] }],
-          // ["image"],
-        ],
-      },
-    });
-
-    this.quillCreate.on("text-change", () => {
-      this.dataCreate.isi = this.quillCreate.root.innerHTML;
-    });
-
+    // this.quillCreate = new Quill("#isi_create_editor", {
+    //   theme: "snow",
+    //   placeholder: "Masukkan isi",
+    //   modules: {
+    //     toolbar: [
+    //       [{ header: "1" }, { header: "2" }, { font: [] }],
+    //       [{ list: "ordered" }, { list: "bullet" }],
+    //       [{ script: "sub" }, { script: "super" }],
+    //       [{ align: [] }],
+    //       ["bold", "italic", "underline"],
+    //       ["link"],
+    //       ["blockquote", "code-block"],
+    //       [{ color: [] }, { background: [] }],
+    //       // ["image"],
+    //     ],
+    //   },
+    // });
+    // this.quillCreate.on("text-change", () => {
+    //   this.dataCreate.isi = this.quillCreate.root.innerHTML;
+    // });
     // Update
-    this.quillUpdate = new Quill("#isi_update_editor", {
-      theme: "snow",
-      placeholder: "Masukkan isi",
-      modules: {
-        toolbar: [
-          [{ header: "1" }, { header: "2" }, { font: [] }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ align: [] }],
-          ["bold", "italic", "underline"],
-          ["link"],
-          ["blockquote", "code-block"],
-          [{ color: [] }, { background: [] }],
-          // ["image"],
-        ],
-      },
-    });
-
-    this.quillUpdate.on("text-change", () => {
-      this.dataUpdate.isi = this.quillUpdate.root.innerHTML;
-    });
+    // this.quillUpdate = new Quill("#isi_update_editor", {
+    //   theme: "snow",
+    //   placeholder: "Masukkan isi",
+    //   modules: {
+    //     toolbar: [
+    //       [{ header: "1" }, { header: "2" }, { font: [] }],
+    //       [{ list: "ordered" }, { list: "bullet" }],
+    //       [{ script: "sub" }, { script: "super" }],
+    //       [{ align: [] }],
+    //       ["bold", "italic", "underline"],
+    //       ["link"],
+    //       ["blockquote", "code-block"],
+    //       [{ color: [] }, { background: [] }],
+    //       // ["image"],
+    //     ],
+    //   },
+    // });
+    // this.quillUpdate.on("text-change", () => {
+    //   this.dataUpdate.isi = this.quillUpdate.root.innerHTML;
+    // });
   },
   methods: {
-    setDataUpdate(id, header, isi, footer) {
+    setDataUpdate(
+      id,
+      syarat
+      // isi
+      // footer
+    ) {
       this.dataUpdate.id = id;
-      this.dataUpdate.header = header;
-      this.dataUpdate.isi = isi;
-      this.quillUpdate.root.innerHTML = this.dataUpdate.isi;
-      this.dataUpdate.footer = footer;
+      this.dataUpdate.syarat = syarat;
+      // this.dataUpdate.isi = isi;
+      // this.quillUpdate.root.innerHTML = this.dataUpdate.isi;
+      // this.dataUpdate.footer = footer;
     },
     async sendUpdateData() {
       try {
         const formData = new FormData();
-        formData.append("header", this.dataUpdate.header);
-        formData.append("isi", this.dataUpdate.isi);
-        formData.append("footer", this.dataUpdate.footer);
+        formData.append("syarat", this.dataUpdate.syarat);
+        // formData.append("isi", this.dataUpdate.isi);
+        // formData.append("footer", this.dataUpdate.footer);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/update/${
+          `${import.meta.env.VITE_API_ENDPOINT}/syarat-ketentuan/update/${
             this.dataUpdate.id
           }`,
           formData,
@@ -339,11 +343,11 @@ export default {
         console.log(response.data); // Handle response from server
         this.dataUpdate = {
           id: "",
-          header: "",
-          isi: "",
-          footer: "",
+          syarat: "",
+          // isi: "",
+          // footer: "",
         }; // Clear input field after successful submission
-        this.quillUpdate.setContents([]);
+        // this.quillUpdate.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
         this.showAlert("Berhasil!", "Data berhasil diupdate.", "success");
       } catch (error) {
@@ -375,11 +379,11 @@ export default {
     async tambahData() {
       try {
         const formData = new FormData();
-        formData.append("header", this.dataCreate.header);
-        formData.append("isi", this.dataCreate.isi);
-        formData.append("footer", this.dataCreate.footer);
+        formData.append("syarat", this.dataCreate.syarat);
+        // formData.append("isi", this.dataCreate.isi);
+        // formData.append("footer", this.dataCreate.footer);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/create`,
+          `${import.meta.env.VITE_API_ENDPOINT}/syarat-ketentuan/create`,
           formData,
           {
             headers: {
@@ -389,11 +393,11 @@ export default {
         );
         console.log(response.data); // Handle response from server
         this.dataCreate = {
-          header: "",
-          isi: "",
-          footer: "",
+          syarat: "",
+          // isi: "",
+          // footer: "",
         }; // Clear input field after successful submission
-        this.quillCreate.setContents([]);
+        // this.quillCreate.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
         this.showAlert("Berhasil!", "Data berhasil ditambahkan.", "success");
       } catch (error) {
@@ -416,7 +420,7 @@ export default {
           // Generic error handling if the response doesn't contain validation errors
           this.showError(
             "Opps...",
-            "Terjadi kesalahan saat menambahkan data catpers.",
+            "Terjadi kesalahan saat menambahkan data.",
             "error"
           );
         }
@@ -426,7 +430,7 @@ export default {
       this.ready = false;
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/list`,
+          `${import.meta.env.VITE_API_ENDPOINT}/syarat-ketentuan/list`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -466,7 +470,7 @@ export default {
     async deleteData(id) {
       try {
         const response = await axios.delete(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/delete/${id}`,
+          `${import.meta.env.VITE_API_ENDPOINT}/syarat-ketentuan/delete/${id}`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,

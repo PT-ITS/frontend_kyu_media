@@ -29,7 +29,9 @@ const toggleSidebar = () => {
             <div class="card p-3" style="border-radius: 25px">
               <div class="row mb-3">
                 <div class="col-6">
-                  <div class="h5 font-weight-bold text-black">Beranda</div>
+                  <div class="h5 font-weight-bold text-black">
+                    Media Partner
+                  </div>
                 </div>
                 <div class="d-flex justify-content-end col-6">
                   <button
@@ -53,9 +55,9 @@ const toggleSidebar = () => {
                     <tr>
                       <th scope="col" style="width: 50px">No</th>
                       <th scope="col">Aksi</th>
-                      <th scope="col">Header</th>
-                      <th scope="col">Isi</th>
-                      <th scope="col">Footer</th>
+                      <th scope="col">Nama Media Partner</th>
+                      <th scope="col">Logo</th>
+                      <!-- <th scope="col">Footer</th> -->
                     </tr>
                   </thead>
                   <tbody>
@@ -69,9 +71,9 @@ const toggleSidebar = () => {
                           @click="
                             setDataUpdate(
                               item.id,
-                              item.header,
-                              item.isi,
-                              item.footer
+                              item.nama,
+                              item.logo
+                              // item.footer
                             )
                           "
                         >
@@ -79,14 +81,21 @@ const toggleSidebar = () => {
                         </button>
                         <button
                           class="btn btn-danger me-1 mb-1"
-                          @click="konfirmasi(item.id, item.header)"
+                          @click="konfirmasi(item.id, item.nama)"
                         >
                           <i class="bi bi-trash3-fill"></i>
                         </button>
                       </td>
-                      <td>{{ item.header }}</td>
-                      <td><div v-html="item.isi"></div></td>
-                      <td>{{ item.footer }}</td>
+                      <td>{{ item.nama }}</td>
+                      <td>
+                        <img
+                          :src="getImageUrl(item.logo)"
+                          alt="Logo Media Partner"
+                          class="img-fluid"
+                          style="width: 150px"
+                        />
+                      </td>
+                      <!-- <td>{{ item.footer }}</td> -->
                     </tr>
                   </tbody>
                 </DataTable>
@@ -130,21 +139,27 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="header">Header</label>
+              <label for="nama">Nama Media Partner</label>
               <input
                 type="text"
                 class="form-control"
-                id="header"
-                v-model="dataCreate.header"
-                placeholder="Masukkan header"
+                id="nama"
+                v-model="dataCreate.nama"
+                placeholder="Masukkan nama media Partner"
                 required
               />
             </div>
             <div class="form-group">
-              <label for="isi">Isi</label>
-              <div id="isi_create_editor" style="height: 200px"></div>
+              <label for="logo">Logo</label>
+              <input
+                type="file"
+                class="form-control"
+                id="logo"
+                @change="handleCreateFileUpload"
+                ref="logo"
+              />
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="footer">Footer</label>
               <input
                 type="text"
@@ -154,7 +169,7 @@ const toggleSidebar = () => {
                 placeholder="Masukkan footer"
                 required
               />
-            </div>
+            </div> -->
           </form>
         </div>
         <div class="modal-footer">
@@ -195,20 +210,26 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="header">Header</label>
+              <label for="nama">Nama Media Partner</label>
               <input
                 type="text"
                 class="form-control"
-                id="header"
-                v-model="dataUpdate.header"
+                id="nama"
+                v-model="dataUpdate.nama"
                 required
               />
             </div>
             <div class="form-group">
-              <label for="isi">Isi</label>
-              <div id="isi_update_editor" style="height: 200px"></div>
+              <label for="logo">Logo</label>
+              <input
+                type="file"
+                class="form-control"
+                id="logo"
+                @change="handleUpdateFileUpload"
+                ref="logo"
+              />
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="footer">Footer</label>
               <input
                 type="text"
@@ -217,7 +238,7 @@ const toggleSidebar = () => {
                 v-model="dataUpdate.footer"
                 required
               />
-            </div>
+            </div> -->
           </form>
         </div>
         <div class="modal-footer">
@@ -239,8 +260,8 @@ import Swal from "sweetalert2";
 import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 DataTable.use(DataTablesCore);
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
+// import Quill from "quill";
+// import "quill/dist/quill.snow.css";
 
 export default {
   data() {
@@ -251,87 +272,92 @@ export default {
         // Other DataTables options
       },
       dataCreate: {
-        header: "",
-        isi: "",
-        footer: "",
+        nama: "",
+        logo: null,
+        // footer: "",
       },
       dataUpdate: {
         id: "",
-        header: "",
-        isi: "",
-        footer: "",
+        nama: "",
+        logo: null,
+        // footer: "",
       },
       ready: false,
     };
   },
   mounted() {
     // Create
-    this.quillCreate = new Quill("#isi_create_editor", {
-      theme: "snow",
-      placeholder: "Masukkan isi",
-      modules: {
-        toolbar: [
-          [{ header: "1" }, { header: "2" }, { font: [] }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ align: [] }],
-          ["bold", "italic", "underline"],
-          ["link"],
-          ["blockquote", "code-block"],
-          [{ color: [] }, { background: [] }],
-          // ["image"],
-        ],
-      },
-    });
-
-    this.quillCreate.on("text-change", () => {
-      this.dataCreate.isi = this.quillCreate.root.innerHTML;
-    });
-
-    // Update
-    this.quillUpdate = new Quill("#isi_update_editor", {
-      theme: "snow",
-      placeholder: "Masukkan isi",
-      modules: {
-        toolbar: [
-          [{ header: "1" }, { header: "2" }, { font: [] }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ align: [] }],
-          ["bold", "italic", "underline"],
-          ["link"],
-          ["blockquote", "code-block"],
-          [{ color: [] }, { background: [] }],
-          // ["image"],
-        ],
-      },
-    });
-
-    this.quillUpdate.on("text-change", () => {
-      this.dataUpdate.isi = this.quillUpdate.root.innerHTML;
-    });
+    // this.quillCreate = new Quill("#isi_create_editor", {
+    //   theme: "snow",
+    //   placeholder: "Masukkan isi",
+    //   modules: {
+    //     toolbar: [
+    //       [{ header: "1" }, { header: "2" }, { font: [] }],
+    //       [{ list: "ordered" }, { list: "bullet" }],
+    //       [{ script: "sub" }, { script: "super" }],
+    //       [{ align: [] }],
+    //       ["bold", "italic", "underline"],
+    //       ["link"],
+    //       ["blockquote", "code-block"],
+    //       [{ color: [] }, { background: [] }],
+    //       // ["image"],
+    //     ],
+    //   },
+    // });
+    // this.quillCreate.on("text-change", () => {
+    //   this.dataCreate.isi = this.quillCreate.root.innerHTML;
+    // });
+    // // Update
+    // this.quillUpdate = new Quill("#isi_update_editor", {
+    //   theme: "snow",
+    //   placeholder: "Masukkan isi",
+    //   modules: {
+    //     toolbar: [
+    //       [{ header: "1" }, { header: "2" }, { font: [] }],
+    //       [{ list: "ordered" }, { list: "bullet" }],
+    //       [{ script: "sub" }, { script: "super" }],
+    //       [{ align: [] }],
+    //       ["bold", "italic", "underline"],
+    //       ["link"],
+    //       ["blockquote", "code-block"],
+    //       [{ color: [] }, { background: [] }],
+    //       // ["image"],
+    //     ],
+    //   },
+    // });
+    // this.quillUpdate.on("text-change", () => {
+    //   this.dataUpdate.isi = this.quillUpdate.root.innerHTML;
+    // });
   },
   methods: {
-    setDataUpdate(id, header, isi, footer) {
+    setDataUpdate(
+      id,
+      nama,
+      logo
+      // footer
+    ) {
       this.dataUpdate.id = id;
-      this.dataUpdate.header = header;
-      this.dataUpdate.isi = isi;
-      this.quillUpdate.root.innerHTML = this.dataUpdate.isi;
-      this.dataUpdate.footer = footer;
+      this.dataUpdate.nama = nama;
+      this.dataUpdate.logo = logo;
+      // this.quillUpdate.root.innerHTML = this.dataUpdate.isi;
+      // this.dataUpdate.footer = footer;
     },
     async sendUpdateData() {
       try {
         const formData = new FormData();
-        formData.append("header", this.dataUpdate.header);
-        formData.append("isi", this.dataUpdate.isi);
-        formData.append("footer", this.dataUpdate.footer);
+        formData.append("nama", this.dataUpdate.nama);
+        if (this.dataUpdate.logo instanceof File) {
+          formData.append("logo", this.dataUpdate.logo);
+        }
+        // formData.append("footer", this.dataUpdate.footer);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/update/${
+          `${import.meta.env.VITE_API_ENDPOINT}/media-partner/update/${
             this.dataUpdate.id
           }`,
           formData,
           {
             headers: {
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           }
@@ -339,11 +365,12 @@ export default {
         console.log(response.data); // Handle response from server
         this.dataUpdate = {
           id: "",
-          header: "",
-          isi: "",
-          footer: "",
+          nama: "",
+          logo: null,
+          // footer: "",
         }; // Clear input field after successful submission
-        this.quillUpdate.setContents([]);
+        this.$refs.logo.value = "";
+        // this.quillUpdate.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
         this.showAlert("Berhasil!", "Data berhasil diupdate.", "success");
       } catch (error) {
@@ -375,25 +402,27 @@ export default {
     async tambahData() {
       try {
         const formData = new FormData();
-        formData.append("header", this.dataCreate.header);
-        formData.append("isi", this.dataCreate.isi);
-        formData.append("footer", this.dataCreate.footer);
+        formData.append("nama", this.dataCreate.nama);
+        formData.append("logo", this.dataCreate.logo);
+        // formData.append("footer", this.dataCreate.footer);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/create`,
+          `${import.meta.env.VITE_API_ENDPOINT}/media-partner/create`,
           formData,
           {
             headers: {
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           }
         );
         console.log(response.data); // Handle response from server
         this.dataCreate = {
-          header: "",
-          isi: "",
-          footer: "",
+          nama: "",
+          logo: null,
+          // footer: "",
         }; // Clear input field after successful submission
-        this.quillCreate.setContents([]);
+        this.$refs.logo.value = "";
+        // this.quillCreate.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
         this.showAlert("Berhasil!", "Data berhasil ditambahkan.", "success");
       } catch (error) {
@@ -416,7 +445,7 @@ export default {
           // Generic error handling if the response doesn't contain validation errors
           this.showError(
             "Opps...",
-            "Terjadi kesalahan saat menambahkan data catpers.",
+            "Terjadi kesalahan saat menambahkan data.",
             "error"
           );
         }
@@ -426,7 +455,7 @@ export default {
       this.ready = false;
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/list`,
+          `${import.meta.env.VITE_API_ENDPOINT}/media-partner/list`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -466,7 +495,7 @@ export default {
     async deleteData(id) {
       try {
         const response = await axios.delete(
-          `${import.meta.env.VITE_API_ENDPOINT}/beranda/delete/${id}`,
+          `${import.meta.env.VITE_API_ENDPOINT}/media-partner/delete/${id}`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -500,6 +529,18 @@ export default {
           this.deleteData(id);
         }
       });
+    },
+    handleCreateFileUpload(event) {
+      this.dataCreate.logo = event.target.files[0];
+    },
+    handleUpdateFileUpload(event) {
+      this.dataUpdate.logo = event.target.files[0];
+    },
+    getImageUrl(image) {
+      if (image != null) {
+        return `${import.meta.env.VITE_STORAGE_ENDPOINT}/${image}`;
+      }
+      return "https://via.placeholder.com/150";
     },
   },
   created() {

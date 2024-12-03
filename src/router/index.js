@@ -25,6 +25,61 @@ const router = createRouter({
       name: 'beranda',
       component: () => import('../views/BerandaView.vue'),
     },
+    {
+      path: '/info',
+      name: 'info',
+      component: () => import('../views/InfoView.vue'),
+    },
+    {
+      path: '/manfaat',
+      name: 'manfaat',
+      component: () => import('../views/ManfaatView.vue'),
+    },
+    {
+      path: '/keunggulan',
+      name: 'keunggulan',
+      component: () => import('../views/KeunggulanView.vue'),
+    },
+    {
+      path: '/tentang-kami',
+      name: 'tentang-kami',
+      component: () => import('../views/TentangKamiView.vue'),
+    },
+    {
+      path: '/harga',
+      name: 'harga',
+      component: () => import('../views/HargaView.vue'),
+    },
+    {
+      path: '/syarat-ketentuan',
+      name: 'syarat-ketentuan',
+      component: () => import('../views/SyaratKetentuanView.vue'),
+    },
+    {
+      path: '/media-partner',
+      name: 'media-partner',
+      component: () => import('../views/MediaPartnerView.vue'),
+    },
+    {
+      path: '/cara-order',
+      name: 'cara-order',
+      component: () => import('../views/CaraOrderView.vue'),
+    },
+    {
+      path: '/faq',
+      name: 'faq',
+      component: () => import('../views/FaqView.vue'),
+    },
+    {
+      path: '/layanan',
+      name: 'layanan',
+      component: () => import('../views/LayananView.vue'),
+    },
+    {
+      path: '/kontak',
+      name: 'kontak',
+      component: () => import('../views/KontakView.vue'),
+    },
 
     // Error Handling ===========================================
     {
