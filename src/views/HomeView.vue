@@ -858,7 +858,7 @@
             <div
               class="feature-item mb-5"
               data-aos="fade-right"
-              data-aos-delay="200"
+              data-aos-delay="300"
             >
               <div
                 class="card mb-3"
@@ -881,7 +881,7 @@
                     </div>
                   </div>
                 </div>
-                <div v-if="cara_oder == null">
+                <div v-if="cara_order == null">
                   <div class="card-body">
                     <div class="card-text">
                       <b>1. Konsultasi</b><br />
