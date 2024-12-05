@@ -1,0 +1,1 @@
+import{_ as t,b as s,c as o,d as e}from"./index-eb6767bb.js";const n={},a={class:"text-center text-white font-weight-bold bg-page"},_=e("h1",null,"Unauthorized",-1),c=e("p",null,"Anda tidak memiliki akses ke halaman tersebut",-1),i=[_,c];function d(r,l,h,u,p,f){return s(),o("div",a,i)}const k=t(n,[["render",d]]);export{k as default};
