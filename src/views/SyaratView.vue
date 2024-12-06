@@ -40,7 +40,7 @@ import Footer from "../components/home/Footer.vue";
                 <div class="about-description" v-html="item.isi"></div>
               </div>
             </div>
-            <div v-if="syarat == null">
+            <div v-if="syarat == null || !ready">
               <h2 class="about-title">
                 Pastikan Membaca Syarat dan Ketentuan Layanan
               </h2>
@@ -74,12 +74,12 @@ export default {
       syarat: [],
       layanan: [],
       kontak: [],
-      // ready: false,
+      ready: false,
     };
   },
   methods: {
     async fetchData() {
-      // this.ready = false;
+      this.ready = false;
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_ENDPOINT}/all/syarat`,
@@ -92,7 +92,7 @@ export default {
         this.syarat = response.data.data.syarat; // Update the dataList with data from the server
         this.layanan = response.data.data.layanan; // Update the dataList with data from the server
         this.kontak = response.data.data.kontak; // Update the dataList with data from the server
-        // this.ready = true;
+        this.ready = true;
       } catch (error) {
         console.error(error); // Handle error if any
         this.showAlert(

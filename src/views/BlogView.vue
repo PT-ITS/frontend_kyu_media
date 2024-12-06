@@ -60,7 +60,7 @@ import Footer from "../components/home/Footer.vue";
                 </div>
               </div>
             </div>
-            <div v-if="blog == null">
+            <div v-if="blog == null || !ready">
               <div
                 class="card"
                 style="width: 18rem; flex-grow: 1; flex-shrink: 1"
@@ -103,12 +103,12 @@ export default {
       blog: [],
       layanan: [],
       kontak: [],
-      // ready: false,
+      ready: false,
     };
   },
   methods: {
     async fetchData() {
-      // this.ready = false;
+      this.ready = false;
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_ENDPOINT}/all/blog`,
@@ -121,7 +121,7 @@ export default {
         this.blog = response.data.data.blog; // Update the dataList with data from the server
         this.layanan = response.data.data.layanan; // Update the dataList with data from the server
         this.kontak = response.data.data.kontak; // Update the dataList with data from the server
-        // this.ready = true;
+        this.ready = true;
       } catch (error) {
         console.error(error); // Handle error if any
         this.showAlert(

@@ -74,7 +74,10 @@ import Footer from "../components/home/Footer.vue";
             </div>
           </div>
         </div>
-        <div class="row g-4 justify-content-center" v-if="paket == null">
+        <div
+          class="row g-4 justify-content-center"
+          v-if="paket == null || !ready"
+        >
           <!-- Basic Plan -->
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="pricing-card">
@@ -268,7 +271,7 @@ import Footer from "../components/home/Footer.vue";
                   <li class="list-group-item">{{ item.syarat }}</li>
                 </ul>
               </div>
-              <div v-if="syarat_ketentuan == null">
+              <div v-if="syarat_ketentuan == null || !ready">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">Naskah dapat diedit.</li>
                   <li class="list-group-item">
@@ -335,7 +338,7 @@ export default {
       syarat_ketentuan: [],
       layanan: [],
       kontak: [],
-      // ready: false,
+      ready: false,
     };
   },
   methods: {
@@ -349,7 +352,7 @@ export default {
       return Array.from(items).map((li) => li.textContent.trim());
     },
     async fetchData() {
-      // this.ready = false;
+      this.ready = false;
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_ENDPOINT}/all/paket`,
@@ -363,7 +366,7 @@ export default {
         this.syarat_ketentuan = response.data.data.syarat_ketentuan; // Update the dataList with data from the server
         this.layanan = response.data.data.layanan; // Update the dataList with data from the server
         this.kontak = response.data.data.kontak; // Update the dataList with data from the server
-        // this.ready = true;
+        this.ready = true;
       } catch (error) {
         console.error(error); // Handle error if any
         this.showAlert(

@@ -56,7 +56,7 @@ import Footer from "../components/home/Footer.vue";
               </div>
               <div class="about-description" v-html="blog.isi"></div>
             </div>
-            <div v-if="blog == null">
+            <div v-if="blog == null || !ready">
               <h2 class="about-title">Our Blog</h2>
               <p class="about-description">
                 Jasa Press Release Murah: Solusi Cerdas Untuk Bisnis Kamu.
@@ -104,7 +104,7 @@ import Footer from "../components/home/Footer.vue";
                 </div>
               </div>
             </div>
-            <div v-if="latest_blog == null">
+            <div v-if="latest_blog == null || !ready">
               <h2 class="about-title">Our Blog</h2>
               <p class="about-description">
                 Jasa Press Release Murah: Solusi Cerdas Untuk Bisnis Kamu.
@@ -135,12 +135,12 @@ export default {
       layanan: [],
       kontak: [],
       id: null,
-      // ready: false,
+      ready: false,
     };
   },
   methods: {
     async fetchData() {
-      // this.ready = false;
+      this.ready = false;
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_ENDPOINT}/all/detail-blog/${this.id}`,
@@ -154,7 +154,7 @@ export default {
         this.latest_blog = response.data.data.latest_blog; // Update the dataList with data from the server
         this.layanan = response.data.data.layanan; // Update the dataList with data from the server
         this.kontak = response.data.data.kontak; // Update the dataList with data from the server
-        // this.ready = true;
+        this.ready = true;
       } catch (error) {
         console.error(error); // Handle error if any
         this.showAlert(

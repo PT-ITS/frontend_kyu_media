@@ -70,7 +70,7 @@ import Footer from "../components/home/Footer.vue";
                 </li>
               </ul>
             </div>
-            <div v-if="tentang_kami == null">
+            <div v-if="tentang_kami == null || !ready">
               <h2 class="about-title">Tentang Kyu Media</h2>
               <p class="about-description">
                 Kyu Media merupakan perusahaan media agensi yang melayani
@@ -130,7 +130,7 @@ import Footer from "../components/home/Footer.vue";
                 </div>
               </div>
             </div>
-            <div v-if="faq == null">
+            <div v-if="faq == null || !ready">
               <div class="faq-container">
                 <div
                   class="faq-item"
@@ -328,7 +328,7 @@ export default {
       faq: [],
       layanan: [],
       kontak: [],
-      // ready: false,
+      ready: false,
     };
   },
   methods: {
@@ -342,7 +342,7 @@ export default {
       return Array.from(items).map((li) => li.textContent.trim());
     },
     async fetchData() {
-      // this.ready = false;
+      this.ready = false;
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_ENDPOINT}/all/about`,
@@ -356,7 +356,7 @@ export default {
         this.faq = response.data.data.faq; // Update the dataList with data from the server
         this.layanan = response.data.data.layanan; // Update the dataList with data from the server
         this.kontak = response.data.data.kontak; // Update the dataList with data from the server
-        // this.ready = true;
+        this.ready = true;
       } catch (error) {
         console.error(error); // Handle error if any
         this.showAlert(

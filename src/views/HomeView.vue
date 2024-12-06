@@ -24,7 +24,7 @@ import Footer from "../components/home/Footer.vue";
                   <b>{{ layanan[0]["footer"] }}</b>
                 </h4>
               </div>
-              <div v-if="layanan == null">
+              <div v-if="layanan == null || !ready">
                 <h1 class="mb-4">Jasa Press Release Murah</h1>
 
                 <p class="mb-4">
@@ -81,7 +81,7 @@ import Footer from "../components/home/Footer.vue";
                   <h3>{{ info["header"] }}</h3>
                   <div v-html="info['isi']"></div>
                 </div>
-                <div v-if="info == null">
+                <div v-if="info == null || !ready">
                   <h3>Inilah yang Wajib Anda Tahu</h3>
                   <p>
                     Menggunakan press release sebagai alat untuk menyebarkan
@@ -143,7 +143,7 @@ import Footer from "../components/home/Footer.vue";
                 </div>
               </div>
             </div>
-            <div v-if="manfaat == null">
+            <div v-if="manfaat == null || !ready">
               <div
                 class="feature-item text-end mb-5"
                 data-aos="fade-right"
@@ -260,7 +260,7 @@ import Footer from "../components/home/Footer.vue";
             </div>
           </div>
         </div>
-        <div class="row g-4" v-if="keunggulan == null">
+        <div class="row g-4" v-if="keunggulan == null || !ready">
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
             <div class="service-card d-flex">
               <div class="icon flex-shrink-0">
@@ -376,7 +376,7 @@ import Footer from "../components/home/Footer.vue";
               <h2 class="about-title">{{ tentang_kami["header"] }}</h2>
               <div class="about-description" v-html="tentang_kami['isi']"></div>
             </div>
-            <div v-if="tentang_kami == null">
+            <div v-if="tentang_kami == null || !ready">
               <h2 class="about-title">Tentang Kyu Media</h2>
               <p class="about-description">
                 Kyu Media merupakan perusahaan media agensi yang melayani
@@ -448,7 +448,7 @@ import Footer from "../components/home/Footer.vue";
                 </div>
               </div>
             </div>
-            <div v-if="tentang_kami == null">
+            <div v-if="tentang_kami == null || !ready">
               <div class="row mb-4 text-center">
                 <div class="col-xl-6">
                   <div class="card">
@@ -541,7 +541,10 @@ import Footer from "../components/home/Footer.vue";
             </div>
           </div>
         </div>
-        <div class="row g-4 justify-content-center" v-if="harga == null">
+        <div
+          class="row g-4 justify-content-center"
+          v-if="harga == null || !ready"
+        >
           <!-- Basic Plan -->
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="pricing-card">
@@ -744,7 +747,7 @@ import Footer from "../components/home/Footer.vue";
                   <li class="list-group-item">{{ item.syarat }}</li>
                 </ul>
               </div>
-              <div v-if="syarat_ketentuan == null">
+              <div v-if="syarat_ketentuan == null || !ready">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">Naskah dapat diedit.</li>
                   <li class="list-group-item">
@@ -810,7 +813,7 @@ import Footer from "../components/home/Footer.vue";
               />
             </div>
             <!-- Default content for when media_partner is not ready -->
-            <div v-if="media_partner == null" class="swiper-slide">
+            <div v-if="media_partner == null || !ready" class="swiper-slide">
               <img
                 src="https://via.placeholder.com/150"
                 class="img-fluid"
@@ -870,7 +873,7 @@ import Footer from "../components/home/Footer.vue";
                     </div>
                   </div>
                 </div>
-                <div v-if="cara_order == null">
+                <div v-if="cara_order == null || !ready">
                   <div class="card-body">
                     <div class="card-text">
                       <b>1. Konsultasi</b><br />
@@ -957,7 +960,7 @@ import Footer from "../components/home/Footer.vue";
                 </div>
               </div>
             </div>
-            <div v-if="faq == null">
+            <div v-if="faq == null || !ready">
               <div class="faq-container">
                 <div
                   class="faq-item"
@@ -1163,7 +1166,7 @@ export default {
       faq: [],
       layanan: [],
       kontak: [],
-      // ready: false,
+      ready: false,
     };
   },
   methods: {
@@ -1177,7 +1180,7 @@ export default {
       return Array.from(items).map((li) => li.textContent.trim());
     },
     async fetchData() {
-      // this.ready = false;
+      this.ready = false;
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_ENDPOINT}/all/home`,
@@ -1211,7 +1214,7 @@ export default {
         // console.log(this.faq);
         // console.log(this.layanan);
         // console.log(this.kontak);
-        // this.ready = true;
+        this.ready = true;
       } catch (error) {
         console.error(error); // Handle error if any
         this.showAlert(
