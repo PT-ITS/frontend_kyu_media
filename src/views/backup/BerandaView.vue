@@ -1,7 +1,7 @@
 <script setup>
-import Sidebar from "../components/general/Sidebar.vue";
-import Navbar from "../components/general/Navbar.vue";
-import Footer from "../components/general/Footer.vue";
+import Sidebar from "../../components/general/Sidebar.vue";
+import Navbar from "../../components/general/Navbar.vue";
+import Footer from "../../components/general/Footer.vue";
 import { ref } from "vue";
 
 const sidebarToggled = ref(false);
@@ -29,7 +29,7 @@ const toggleSidebar = () => {
             <div class="card p-3" style="border-radius: 25px">
               <div class="row mb-3">
                 <div class="col-6">
-                  <div class="h5 font-weight-bold text-black">Layanan</div>
+                  <div class="h5 font-weight-bold text-black">Beranda</div>
                 </div>
                 <div class="d-flex justify-content-end col-6">
                   <button
@@ -326,7 +326,7 @@ export default {
         formData.append("isi", this.dataUpdate.isi);
         formData.append("footer", this.dataUpdate.footer);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/layanan/update/${
+          `${import.meta.env.VITE_API_ENDPOINT}/beranda/update/${
             this.dataUpdate.id
           }`,
           formData,
@@ -379,7 +379,7 @@ export default {
         formData.append("isi", this.dataCreate.isi);
         formData.append("footer", this.dataCreate.footer);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/layanan/create`,
+          `${import.meta.env.VITE_API_ENDPOINT}/beranda/create`,
           formData,
           {
             headers: {
@@ -426,7 +426,7 @@ export default {
       this.ready = false;
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_ENDPOINT}/layanan/list`,
+          `${import.meta.env.VITE_API_ENDPOINT}/beranda/list`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -466,7 +466,7 @@ export default {
     async deleteData(id) {
       try {
         const response = await axios.delete(
-          `${import.meta.env.VITE_API_ENDPOINT}/layanan/delete/${id}`,
+          `${import.meta.env.VITE_API_ENDPOINT}/beranda/delete/${id}`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,

@@ -28,7 +28,7 @@
     </li>
 
     <!-- Nav Item - Beranda -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <router-link
         class="nav-link text-white"
         to="/beranda"
@@ -37,7 +37,7 @@
         <i class="bi bi-house text-white fs-6 me-2"></i>
         <span class="text-white fs-6">Beranda</span>
       </router-link>
-    </li>
+    </li> -->
 
     <!-- Nav Item - Info -->
     <li class="nav-item">
@@ -107,7 +107,19 @@
         active-class="font-weight-bold"
       >
         <i class="bi bi-card-checklist text-white fs-6 me-2"></i>
-        <span class="text-white fs-6">Syarat Ketentuan</span>
+        <span class="text-white fs-6">Syarat & Ketentuan</span>
+      </router-link>
+    </li>
+
+    <!-- Nav Item - Syarat Ketentuan -->
+    <li class="nav-item">
+      <router-link
+        class="nav-link text-white"
+        to="/syarat-ketentuan-dua"
+        active-class="font-weight-bold"
+      >
+        <i class="bi bi-card-checklist text-white fs-6 me-2"></i>
+        <span class="text-white fs-6">Syarat & Ketentuan 2</span>
       </router-link>
     </li>
 
@@ -168,6 +180,18 @@
       >
         <i class="bi bi-telephone text-white fs-6 me-2"></i>
         <span class="text-white fs-6">Kontak</span>
+      </router-link>
+    </li>
+
+    <!-- Nav Item - Blog -->
+    <li class="nav-item">
+      <router-link
+        class="nav-link text-white"
+        to="/crud-blog"
+        active-class="font-weight-bold"
+      >
+        <i class="bi bi-newspaper text-white fs-6 me-2"></i>
+        <span class="text-white fs-6">Blog</span>
       </router-link>
     </li>
   </ul>

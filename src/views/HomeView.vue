@@ -1,47 +1,9 @@
+<script setup>
+import Navbar from "../components/home/Navbar.vue";
+import Footer from "../components/home/Footer.vue";
+</script>
 <template>
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div
-      class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between"
-    >
-      <a href="#" class="logo d-flex align-items-center me-auto me-xl-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="/img/logo.png" style="width: 150px" alt="" />
-        <!-- <h1 class="sitename">Kyu Media</h1> -->
-      </a>
-
-      <!-- Bootstrap Navbar -->
-      <nav class="navbar navbar-expand-xl navbar-light">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item" v-for="link in links" :key="link.id">
-              <a
-                class="nav-link"
-                :class="{ active: activeSection === link.id }"
-                :href="`#${link.id}`"
-              >
-                {{ link.name }}
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
-      <a class="btn-getstarted" href="#order">Cara Order</a>
-    </div>
-  </header>
-
+  <Navbar :layanan="layanan" />
   <main class="main">
     <!-- Hero Section -->
     <section id="home" class="hero section">
@@ -53,16 +15,16 @@
                 <i class="bi bi-gear-fill me-2"></i>
                 KYU MEDIA
               </div>
-              <div v-if="beranda != null">
-                <h1 class="mb-4">{{ beranda["header"] }}</h1>
+              <div v-if="layanan != null">
+                <h1 class="mb-4">{{ layanan[0]["header"] }}</h1>
 
-                <div class="mb-4" v-html="beranda['isi']"></div>
+                <div class="mb-4" v-html="layanan[0]['isi']"></div>
 
                 <h4 class="mb-4 mb-md-5">
-                  <b>{{ beranda["footer"] }}</b>
+                  <b>{{ layanan[0]["footer"] }}</b>
                 </h4>
               </div>
-              <div v-if="beranda == null">
+              <div v-if="layanan == null">
                 <h1 class="mb-4">Jasa Press Release Murah</h1>
 
                 <p class="mb-4">
@@ -76,9 +38,11 @@
               </div>
 
               <div class="hero-buttons">
-                <a href="#" class="btn btn-primary me-0 me-sm-2 mx-1"
-                  >Free Konsultasi</a
-                >
+                <a
+                  :href="'https://wa.me/' + kontak[0]['kontak']"
+                  class="btn btn-primary me-0 me-sm-2 mx-1"
+                  >Free Konsultasi <i class="bi bi-whatsapp"></i
+                ></a>
               </div>
             </div>
           </div>
@@ -422,6 +386,19 @@
                 monitoring, strategi media, dan layanan konten berkualitas.
               </p>
             </div>
+            <div class="row g-4" data-aos-delay="200">
+              <div class="d-flex justify-content-start">
+                <router-link
+                  class="btn btn-primary me-0 me-sm-2 mx-1"
+                  to="/about-us"
+                >
+                  <span class="text-white fs-6"
+                    >Selengkapnya
+                    <i class="bi bi-arrow-up-right-circle-fill"></i
+                  ></span>
+                </router-link>
+              </div>
+            </div>
           </div>
 
           <div class="col-xl-6" data-aos="fade-up" data-aos-delay="300">
@@ -554,7 +531,10 @@
                 </li>
               </ul>
 
-              <a href="#" class="btn btn-primary">
+              <a
+                :href="'https://wa.me/' + kontak[0]['kontak']"
+                class="btn btn-primary"
+              >
                 Order
                 <i class="bi bi-arrow-right"></i>
               </a>
@@ -730,6 +710,15 @@
             </div>
           </div>
         </div>
+        <div class="row mt-4 g-4" data-aos-delay="400">
+          <div class="d-flex justify-content-center">
+            <router-link class="btn btn-primary me-0 me-sm-2 mx-1" to="/paket">
+              <span class="text-white fs-6"
+                >Paket Lainnya <i class="bi bi-arrow-up-right-circle-fill"></i
+              ></span>
+            </router-link>
+          </div>
+        </div>
       </div>
     </section>
     <!-- /Pricing Section -->
@@ -849,7 +838,7 @@
               <img
                 src="/assets/img/features-illustration-2.webp"
                 alt="Feature 2"
-                class="img-fluid"
+                class="img-fluid mb-5"
               />
             </div>
           </div>
@@ -901,6 +890,19 @@
                       setelahnya.
                     </div>
                   </div>
+                </div>
+              </div>
+              <div class="row g-4">
+                <div class="d-flex justify-content-center">
+                  <a
+                    :href="'https://wa.me/' + kontak[0]['kontak']"
+                    class="btn btn-primary me-0 me-sm-2 mx-1"
+                  >
+                    <span class="text-white fs-6"
+                      >Order Sekarang
+                      <i class="bi bi-arrow-up-right-circle-fill"></i
+                    ></span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1135,101 +1137,7 @@
     <!-- /Faq Section -->
   </main>
 
-  <footer id="footer" class="footer">
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <img src="/img/logo.png" style="width: 150px" alt="" />
-            <!-- <span class="sitename">Kyu Media</span> -->
-          </a>
-          <div class="footer-contact pt-3">
-            <p>
-              PublikaLabs merupakan perusahaan media agensi yang melayani
-              strategi pengelolaan konten artikel dan audio visual untuk
-              mendorong pertumbuhan bisnis.
-            </p>
-          </div>
-          <!-- <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div> -->
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links"></div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Perusahaan</h4>
-          <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#info">Info</a></li>
-            <li><a href="#benefits">Benefits</a></li>
-            <li><a href="#advantages">Advantages</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#prices">Prices</a></li>
-            <li><a href="#terms">Terms and Conditions</a></li>
-            <li><a href="#faq">FAQ</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
-          <div v-if="layanan != null">
-            <ul>
-              <li v-for="item in layanan" :key="item.id">
-                <a href="#">{{ item.layanan }}</a>
-              </li>
-            </ul>
-          </div>
-          <div v-if="layanan == null">
-            <ul>
-              <li><a href="#">Jasa Press Release</a></li>
-              <li><a href="#">Jasa Backlink Media Nasional</a></li>
-              <li><a href="#">Jasa Pengelolaan Media Sosial</a></li>
-              <li><a href="#">Jasa Penulisan Artikel</a></li>
-              <li><a href="#">Media Monitoring</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Contact Us</h4>
-          <div v-if="kontak != null">
-            <ul>
-              <li v-for="item in kontak" :key="item.id">
-                <a href="#">{{ item.kontak }}</a>
-              </li>
-            </ul>
-          </div>
-          <div v-if="kontak == null">
-            <ul>
-              <li><a href="#">08123456789</a></li>
-              <li><a href="#">Jl.</a></li>
-              <li><a href="#">kyumedia@gmail.com</a></li>
-              <li><a href="#">kyumedia.com</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container copyright text-center mt-4">
-      <p>
-        © <span>Copyright</span>
-        <strong class="px-1 sitename">Kyu Media</strong>
-        <span>All Rights Reserved</span>
-      </p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
-      </div>
-    </div>
-  </footer>
+  <Footer :layanan="layanan" :kontak="kontak" />
 </template>
 
 <script>
@@ -1243,7 +1151,7 @@ export default {
   data() {
     return {
       activeFaqIndex: null, // Track the currently active FAQ
-      beranda: [],
+      // beranda: [],
       info: [],
       manfaat: [],
       keunggulan: [],
@@ -1272,14 +1180,14 @@ export default {
       // this.ready = false;
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_ENDPOINT}/all/list`,
+          `${import.meta.env.VITE_API_ENDPOINT}/all/home`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           }
         );
-        this.beranda = response.data.data.beranda; // Update the dataList with data from the server
+        // this.beranda = response.data.data.beranda; // Update the dataList with data from the server
         this.info = response.data.data.info; // Update the dataList with data from the server
         this.manfaat = response.data.data.manfaat; // Update the dataList with data from the server
         this.keunggulan = response.data.data.keunggulan; // Update the dataList with data from the server
@@ -1330,49 +1238,7 @@ export default {
       return "https://via.placeholder.com/150";
     },
   },
-  setup() {
-    const links = ref([
-      { id: "home", name: "Home" },
-      { id: "info", name: "Info" },
-      { id: "benefits", name: "Benefits" },
-      { id: "advantages", name: "Advantages" },
-      { id: "about", name: "About" },
-      { id: "prices", name: "Prices" },
-      { id: "terms", name: "Terms" },
-      { id: "faq", name: "FAQ" },
-    ]);
-
-    const activeSection = ref("hero");
-
-    const updateActiveSection = () => {
-      const sections = document.querySelectorAll("section");
-      const scrollY = window.scrollY + 200; // Offset to account for the fixed header
-
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const sectionId = section.getAttribute("id");
-
-        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-          activeSection.value = sectionId;
-        }
-      });
-    };
-
-    onMounted(() => {
-      window.addEventListener("scroll", updateActiveSection);
-      updateActiveSection(); // Call on load to set initial active state
-    });
-
-    onUnmounted(() => {
-      window.removeEventListener("scroll", updateActiveSection);
-    });
-
-    return {
-      links,
-      activeSection,
-    };
-  },
+  setup() {},
   mounted() {
     const swiperConfig = {
       loop: false,
@@ -1403,10 +1269,25 @@ export default {
 </script>
 
 <style>
-.nav-link.active {
-  font-weight: bold;
-  color: #ee0405 !important;
+.btn-primary {
+  background: linear-gradient(
+    to right,
+    #ee0405,
+    #ff7f00
+  ) !important; /* Gradient from red to orange */
+  color: #fff; /* Optional: Set text color */
+  border: none; /* Optional: Remove border if needed */
+  transition: background-color 0.3s ease; /* Optional: Add smooth transition */
 }
+
+.btn-primary:hover {
+  background: linear-gradient(
+    to right,
+    #ff7f00,
+    #ee0405
+  ) !important; /* Reverse the gradient on hover */
+}
+
 .faq-item {
   margin-bottom: 15px;
   cursor: pointer;

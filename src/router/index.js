@@ -10,6 +10,32 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue')
     },
     {
+      path: '/about-us',
+      name: 'about-us',
+      component: () => import('../views/AboutUsView.vue')
+    },
+    {
+      path: '/syarat',
+      name: 'syarat',
+      component: () => import('../views/SyaratView.vue')
+    },
+    {
+      path: '/paket',
+      name: 'paket',
+      component: () => import('../views/PaketView.vue')
+    },
+    {
+      path: '/blog',
+      name: 'blog',
+      component: () => import('../views/BlogView.vue')
+    },
+    {
+      path: '/blog/:id',
+      name: 'detailBlog',
+      component: () => import('../views/DetailBlogView.vue'),
+      props: true, // Allows route params to be passed as props to the component
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue')
@@ -23,7 +49,7 @@ const router = createRouter({
     {
       path: '/beranda',
       name: 'beranda',
-      component: () => import('../views/BerandaView.vue'),
+      component: () => import('../views/backup/BerandaView.vue'),
     },
     {
       path: '/info',
@@ -56,6 +82,11 @@ const router = createRouter({
       component: () => import('../views/SyaratKetentuanView.vue'),
     },
     {
+      path: '/syarat-ketentuan-dua',
+      name: 'syarat-ketentuan-dua',
+      component: () => import('../views/SyaratKetentuan2View.vue'),
+    },
+    {
       path: '/media-partner',
       name: 'media-partner',
       component: () => import('../views/MediaPartnerView.vue'),
@@ -79,6 +110,11 @@ const router = createRouter({
       path: '/kontak',
       name: 'kontak',
       component: () => import('../views/KontakView.vue'),
+    },
+    {
+      path: '/crud-blog',
+      name: 'crud-blog',
+      component: () => import('../views/CrudBlogView.vue'),
     },
 
     // Error Handling ===========================================
@@ -106,6 +142,66 @@ const assetsToUnloadOnHome = [
 // Handle route changes and load/unload assets
 router.beforeEach((to, from, next) => {
   if (to.path === '/') {
+    // Load home-specific assets
+    assetsToLoadOnHome.forEach(asset => {
+      if (asset.css) loadCSS(asset.css);
+      if (asset.js) loadScript(asset.js);
+    });
+
+    // Unload non-home assets
+    assetsToUnloadOnHome.forEach(asset => {
+      if (asset.css) unloadCSS(asset.css);
+      if (asset.js) unloadScript(asset.js);
+    });
+  } else if (to.path === '/about-us') {
+    // Load home-specific assets
+    assetsToLoadOnHome.forEach(asset => {
+      if (asset.css) loadCSS(asset.css);
+      if (asset.js) loadScript(asset.js);
+    });
+
+    // Unload non-home assets
+    assetsToUnloadOnHome.forEach(asset => {
+      if (asset.css) unloadCSS(asset.css);
+      if (asset.js) unloadScript(asset.js);
+    });
+  } else if (to.path === '/paket') {
+    // Load home-specific assets
+    assetsToLoadOnHome.forEach(asset => {
+      if (asset.css) loadCSS(asset.css);
+      if (asset.js) loadScript(asset.js);
+    });
+
+    // Unload non-home assets
+    assetsToUnloadOnHome.forEach(asset => {
+      if (asset.css) unloadCSS(asset.css);
+      if (asset.js) unloadScript(asset.js);
+    });
+  } else if (to.path === '/syarat') {
+    // Load home-specific assets
+    assetsToLoadOnHome.forEach(asset => {
+      if (asset.css) loadCSS(asset.css);
+      if (asset.js) loadScript(asset.js);
+    });
+
+    // Unload non-home assets
+    assetsToUnloadOnHome.forEach(asset => {
+      if (asset.css) unloadCSS(asset.css);
+      if (asset.js) unloadScript(asset.js);
+    });
+  } else if (to.path === '/blog') {
+    // Load home-specific assets
+    assetsToLoadOnHome.forEach(asset => {
+      if (asset.css) loadCSS(asset.css);
+      if (asset.js) loadScript(asset.js);
+    });
+
+    // Unload non-home assets
+    assetsToUnloadOnHome.forEach(asset => {
+      if (asset.css) unloadCSS(asset.css);
+      if (asset.js) unloadScript(asset.js);
+    });
+  } else if (to.name === 'detailBlog') {
     // Load home-specific assets
     assetsToLoadOnHome.forEach(asset => {
       if (asset.css) loadCSS(asset.css);

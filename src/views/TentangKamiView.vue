@@ -55,6 +55,9 @@ const toggleSidebar = () => {
                       <th scope="col">Aksi</th>
                       <th scope="col">Header</th>
                       <th scope="col">Isi</th>
+                      <th scope="col">Visi</th>
+                      <th scope="col">Misi</th>
+                      <th scope="col">Nilai Perusahaan</th>
                       <th scope="col">Project Complete</th>
                       <th scope="col">Happy Client</th>
                       <th scope="col">Awards Winning</th>
@@ -75,6 +78,9 @@ const toggleSidebar = () => {
                               item.id,
                               item.header,
                               item.isi,
+                              item.visi,
+                              item.misi,
+                              item.nilai_perusahaan,
                               item.project_complete,
                               item.happy_client,
                               item.awards_winning,
@@ -94,6 +100,9 @@ const toggleSidebar = () => {
                       </td>
                       <td>{{ item.header }}</td>
                       <td><div v-html="item.isi"></div></td>
+                      <td><div v-html="item.visi"></div></td>
+                      <td><div v-html="item.misi"></div></td>
+                      <td><div v-html="item.nilai_perusahaan"></div></td>
                       <td>{{ item.project_complete }}</td>
                       <td>{{ item.happy_client }}</td>
                       <td>{{ item.awards_winning }}</td>
@@ -155,6 +164,21 @@ const toggleSidebar = () => {
             <div class="form-group">
               <label for="isi">Isi</label>
               <div id="isi_create_editor" style="height: 200px"></div>
+            </div>
+            <div class="form-group">
+              <label for="visi">Visi</label>
+              <div id="visi_create_editor" style="height: 200px"></div>
+            </div>
+            <div class="form-group">
+              <label for="misi">Misi</label>
+              <div id="misi_create_editor" style="height: 200px"></div>
+            </div>
+            <div class="form-group">
+              <label for="nilai_perusahaan">Nilai Perusahaan</label>
+              <div
+                id="nilai_perusahaan_create_editor"
+                style="height: 200px"
+              ></div>
             </div>
             <div class="form-group">
               <label for="project_complete">Project Complete</label>
@@ -265,6 +289,21 @@ const toggleSidebar = () => {
               <div id="isi_update_editor" style="height: 200px"></div>
             </div>
             <div class="form-group">
+              <label for="visi">Visi</label>
+              <div id="visi_update_editor" style="height: 200px"></div>
+            </div>
+            <div class="form-group">
+              <label for="misi">Misi</label>
+              <div id="misi_update_editor" style="height: 200px"></div>
+            </div>
+            <div class="form-group">
+              <label for="nilai_perusahaan">Nilai Perusahaan</label>
+              <div
+                id="nilai_perusahaan_update_editor"
+                style="height: 200px"
+              ></div>
+            </div>
+            <div class="form-group">
               <label for="project_complete">Project Complete</label>
               <input
                 type="text"
@@ -349,6 +388,9 @@ export default {
       dataCreate: {
         header: "",
         isi: "",
+        visi: "",
+        misi: "",
+        nilai_perusahaan: "",
         project_complete: "",
         happy_client: "",
         awards_winning: "",
@@ -359,6 +401,9 @@ export default {
         id: "",
         header: "",
         isi: "",
+        visi: "",
+        misi: "",
+        nilai_perusahaan: "",
         project_complete: "",
         happy_client: "",
         awards_winning: "",
@@ -370,7 +415,7 @@ export default {
   },
   mounted() {
     // Create
-    this.quillCreate = new Quill("#isi_create_editor", {
+    this.quillCreateIsi = new Quill("#isi_create_editor", {
       theme: "snow",
       placeholder: "Masukkan isi",
       modules: {
@@ -388,12 +433,82 @@ export default {
       },
     });
 
-    this.quillCreate.on("text-change", () => {
-      this.dataCreate.isi = this.quillCreate.root.innerHTML;
+    this.quillCreateIsi.on("text-change", () => {
+      this.dataCreate.isi = this.quillCreateIsi.root.innerHTML;
+    });
+
+    this.quillCreateVisi = new Quill("#visi_create_editor", {
+      theme: "snow",
+      placeholder: "Masukkan isi",
+      modules: {
+        toolbar: [
+          [{ header: "1" }, { header: "2" }, { font: [] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "sub" }, { script: "super" }],
+          [{ align: [] }],
+          ["bold", "italic", "underline"],
+          ["link"],
+          ["blockquote", "code-block"],
+          [{ color: [] }, { background: [] }],
+          // ["image"],
+        ],
+      },
+    });
+
+    this.quillCreateVisi.on("text-change", () => {
+      this.dataCreate.visi = this.quillCreateVisi.root.innerHTML;
+    });
+
+    this.quillCreateMisi = new Quill("#misi_create_editor", {
+      theme: "snow",
+      placeholder: "Masukkan isi",
+      modules: {
+        toolbar: [
+          [{ header: "1" }, { header: "2" }, { font: [] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "sub" }, { script: "super" }],
+          [{ align: [] }],
+          ["bold", "italic", "underline"],
+          ["link"],
+          ["blockquote", "code-block"],
+          [{ color: [] }, { background: [] }],
+          // ["image"],
+        ],
+      },
+    });
+
+    this.quillCreateMisi.on("text-change", () => {
+      this.dataCreate.misi = this.quillCreateMisi.root.innerHTML;
+    });
+
+    this.quillCreateNilaiPerusahaan = new Quill(
+      "#nilai_perusahaan_create_editor",
+      {
+        theme: "snow",
+        placeholder: "Masukkan isi",
+        modules: {
+          toolbar: [
+            [{ header: "1" }, { header: "2" }, { font: [] }],
+            [{ list: "ordered" }, { list: "bullet" }],
+            [{ script: "sub" }, { script: "super" }],
+            [{ align: [] }],
+            ["bold", "italic", "underline"],
+            ["link"],
+            ["blockquote", "code-block"],
+            [{ color: [] }, { background: [] }],
+            // ["image"],
+          ],
+        },
+      }
+    );
+
+    this.quillCreateNilaiPerusahaan.on("text-change", () => {
+      this.dataCreate.nilai_perusahaan =
+        this.quillCreateNilaiPerusahaan.root.innerHTML;
     });
 
     // Update
-    this.quillUpdate = new Quill("#isi_update_editor", {
+    this.quillUpdateIsi = new Quill("#isi_update_editor", {
       theme: "snow",
       placeholder: "Masukkan isi",
       modules: {
@@ -411,8 +526,78 @@ export default {
       },
     });
 
-    this.quillUpdate.on("text-change", () => {
-      this.dataUpdate.isi = this.quillUpdate.root.innerHTML;
+    this.quillUpdateIsi.on("text-change", () => {
+      this.dataUpdate.isi = this.quillUpdateIsi.root.innerHTML;
+    });
+
+    this.quillUpdateVisi = new Quill("#visi_update_editor", {
+      theme: "snow",
+      placeholder: "Masukkan isi",
+      modules: {
+        toolbar: [
+          [{ header: "1" }, { header: "2" }, { font: [] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "sub" }, { script: "super" }],
+          [{ align: [] }],
+          ["bold", "italic", "underline"],
+          ["link"],
+          ["blockquote", "code-block"],
+          [{ color: [] }, { background: [] }],
+          // ["image"],
+        ],
+      },
+    });
+
+    this.quillUpdateVisi.on("text-change", () => {
+      this.dataUpdate.visi = this.quillUpdateVisi.root.innerHTML;
+    });
+
+    this.quillUpdateMisi = new Quill("#misi_update_editor", {
+      theme: "snow",
+      placeholder: "Masukkan isi",
+      modules: {
+        toolbar: [
+          [{ header: "1" }, { header: "2" }, { font: [] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "sub" }, { script: "super" }],
+          [{ align: [] }],
+          ["bold", "italic", "underline"],
+          ["link"],
+          ["blockquote", "code-block"],
+          [{ color: [] }, { background: [] }],
+          // ["image"],
+        ],
+      },
+    });
+
+    this.quillUpdateMisi.on("text-change", () => {
+      this.dataUpdate.misi = this.quillUpdateMisi.root.innerHTML;
+    });
+
+    this.quillUpdateNilaiPerusahaan = new Quill(
+      "#nilai_perusahaan_update_editor",
+      {
+        theme: "snow",
+        placeholder: "Masukkan isi",
+        modules: {
+          toolbar: [
+            [{ header: "1" }, { header: "2" }, { font: [] }],
+            [{ list: "ordered" }, { list: "bullet" }],
+            [{ script: "sub" }, { script: "super" }],
+            [{ align: [] }],
+            ["bold", "italic", "underline"],
+            ["link"],
+            ["blockquote", "code-block"],
+            [{ color: [] }, { background: [] }],
+            // ["image"],
+          ],
+        },
+      }
+    );
+
+    this.quillUpdateNilaiPerusahaan.on("text-change", () => {
+      this.dataUpdate.nilai_perusahaan =
+        this.quillUpdateNilaiPerusahaan.root.innerHTML;
     });
   },
   methods: {
@@ -420,6 +605,9 @@ export default {
       id,
       header,
       isi,
+      visi,
+      misi,
+      nilai_perusahaan,
       project_complete,
       happy_client,
       awards_winning,
@@ -429,7 +617,14 @@ export default {
       this.dataUpdate.id = id;
       this.dataUpdate.header = header;
       this.dataUpdate.isi = isi;
-      this.quillUpdate.root.innerHTML = this.dataUpdate.isi;
+      this.quillUpdateIsi.root.innerHTML = this.dataUpdate.isi;
+      this.dataUpdate.visi = visi;
+      this.quillUpdateVisi.root.innerHTML = this.dataUpdate.visi;
+      this.dataUpdate.misi = misi;
+      this.quillUpdateMisi.root.innerHTML = this.dataUpdate.misi;
+      this.dataUpdate.nilai_perusahaan = nilai_perusahaan;
+      this.quillUpdateNilaiPerusahaan.root.innerHTML =
+        this.dataUpdate.nilai_perusahaan;
       this.dataUpdate.project_complete = project_complete;
       this.dataUpdate.happy_client = happy_client;
       this.dataUpdate.awards_winning = awards_winning;
@@ -441,6 +636,9 @@ export default {
         const formData = new FormData();
         formData.append("header", this.dataUpdate.header);
         formData.append("isi", this.dataUpdate.isi);
+        formData.append("visi", this.dataUpdate.visi);
+        formData.append("misi", this.dataUpdate.misi);
+        formData.append("nilai_perusahaan", this.dataUpdate.nilai_perusahaan);
         formData.append("project_complete", this.dataUpdate.project_complete);
         formData.append("happy_client", this.dataUpdate.happy_client);
         formData.append("awards_winning", this.dataUpdate.awards_winning);
@@ -462,13 +660,19 @@ export default {
           id: "",
           header: "",
           isi: "",
+          visi: "",
+          misi: "",
+          nilai_perusahaan: "",
           project_complete: "",
           happy_client: "",
           awards_winning: "",
           success_rate: "",
           // footer: "",
         }; // Clear input field after successful submission
-        this.quillUpdate.setContents([]);
+        this.quillUpdateIsi.setContents([]);
+        this.quillUpdateVisi.setContents([]);
+        this.quillUpdateMisi.setContents([]);
+        this.quillUpdateNilaiPerusahaan.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
         this.showAlert("Berhasil!", "Data berhasil diupdate.", "success");
       } catch (error) {
@@ -502,6 +706,9 @@ export default {
         const formData = new FormData();
         formData.append("header", this.dataCreate.header);
         formData.append("isi", this.dataCreate.isi);
+        formData.append("visi", this.dataCreate.visi);
+        formData.append("misi", this.dataCreate.misi);
+        formData.append("nilai_perusahaan", this.dataCreate.nilai_perusahaan);
         formData.append("project_complete", this.dataCreate.project_complete);
         formData.append("happy_client", this.dataCreate.happy_client);
         formData.append("awards_winning", this.dataCreate.awards_winning);
@@ -520,13 +727,19 @@ export default {
         this.dataCreate = {
           header: "",
           isi: "",
+          visi: "",
+          misi: "",
+          nilai_perusahaan: "",
           project_complete: "",
           happy_client: "",
           awards_winning: "",
           success_rate: "",
           // footer: "",
         }; // Clear input field after successful submission
-        this.quillCreate.setContents([]);
+        this.quillCreateIsi.setContents([]);
+        this.quillCreateVisi.setContents([]);
+        this.quillCreateMisi.setContents([]);
+        this.quillCreateNilaiPerusahaan.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
         this.showAlert("Berhasil!", "Data berhasil ditambahkan.", "success");
       } catch (error) {
