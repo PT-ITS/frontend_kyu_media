@@ -798,30 +798,32 @@ import Footer from "../components/home/Footer.vue";
     <!-- Clients Section -->
     <section id="clients" class="clients section light-background">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="swiper init-swiper">
-          <div class="swiper-wrapper align-items-center">
-            <div
-              v-if="media_partner != null"
-              v-for="item in media_partner"
-              :key="item.id"
-              class="swiper-slide"
-            >
-              <img
-                :src="getImageUrl(item.logo)"
-                class="img-fluid"
-                :alt="item.nama"
-              />
-            </div>
-            <!-- Default content for when media_partner is not ready -->
-            <div v-if="media_partner == null || !ready" class="swiper-slide">
-              <img
-                src="https://via.placeholder.com/150"
-                class="img-fluid"
-                alt="Default Logo"
-              />
-            </div>
+        <div class="row">
+          <div
+            v-if="media_partner != null"
+            v-for="item in media_partner"
+            :key="item.id"
+            class="col-1 p-2 d-flex align-items-center justify-content-center"
+          >
+            <img
+              :src="getImageUrl(item.logo)"
+              class="img-fluid grayscale"
+              :alt="item.nama"
+            />
           </div>
-          <div class="swiper-pagination"></div>
+          <!-- Default content for when media_partner is not ready -->
+          <div
+            v-if="media_partner == null || !ready"
+            v-for="n in 12"
+            :key="'default-' + n"
+            class="col-1 p-2 d-flex align-items-center justify-content-center"
+          >
+            <img
+              src="https://via.placeholder.com/150"
+              class="img-fluid grayscale"
+              alt="Default Logo"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -1289,6 +1291,18 @@ export default {
     #ff7f00,
     #ee0405
   ) !important; /* Reverse the gradient on hover */
+}
+
+/* Make images grayscale by default */
+img.grayscale {
+  object-fit: cover; /* Ensures the image fills the column dimensions */
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+/* Restore color on hover */
+img.grayscale:hover {
+  filter: grayscale(0%);
 }
 
 .faq-item {
