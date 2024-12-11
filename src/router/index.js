@@ -52,6 +52,11 @@ const router = createRouter({
       component: () => import('../views/backup/BerandaView.vue'),
     },
     {
+      path: '/foto',
+      name: 'foto',
+      component: () => import('../views/FotoView.vue'),
+    },
+    {
       path: '/info',
       name: 'info',
       component: () => import('../views/InfoView.vue'),

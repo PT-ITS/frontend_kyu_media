@@ -158,6 +158,7 @@ const toggleSidebar = () => {
                 @change="handleCreateFileUpload"
                 ref="logo"
               />
+              <p class="text-danger">Keterangan: Ukuran foto maksimal 2 mb</p>
             </div>
             <!-- <div class="form-group">
               <label for="footer">Footer</label>
@@ -228,6 +229,7 @@ const toggleSidebar = () => {
                 @change="handleUpdateFileUpload"
                 ref="logo"
               />
+              <p class="text-danger">Keterangan: Ukuran foto maksimal 2 mb</p>
             </div>
             <!-- <div class="form-group">
               <label for="footer">Footer</label>

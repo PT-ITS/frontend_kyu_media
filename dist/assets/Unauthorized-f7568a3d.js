@@ -1,1 +1,0 @@
-import{_ as t,o,c as s,b as e}from"./index-ebca6c7c.js";const n={},a={class:"text-center text-white font-weight-bold bg-page"},_=e("h1",null,"Unauthorized",-1),c=e("p",null,"Anda tidak memiliki akses ke halaman tersebut",-1),i=[_,c];function r(d,l,h,u,p,f){return o(),s("div",a,i)}const k=t(n,[["render",r]]);export{k as default};

@@ -39,6 +39,18 @@
       </router-link>
     </li> -->
 
+    <!-- Nav Item - Foto -->
+    <li class="nav-item">
+      <router-link
+        class="nav-link text-white"
+        to="/foto"
+        active-class="font-weight-bold"
+      >
+        <i class="bi bi-camera text-white fs-6 me-2"></i>
+        <span class="text-white fs-6">Foto</span>
+      </router-link>
+    </li>
+
     <!-- Nav Item - Info -->
     <li class="nav-item">
       <router-link

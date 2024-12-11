@@ -29,7 +29,7 @@ const toggleSidebar = () => {
             <div class="card p-3" style="border-radius: 25px">
               <div class="row mb-3">
                 <div class="col-6">
-                  <div class="h5 font-weight-bold text-black">Blog</div>
+                  <div class="h5 font-weight-bold text-black">Foto</div>
                 </div>
                 <div class="d-flex justify-content-end col-6">
                   <button
@@ -53,11 +53,10 @@ const toggleSidebar = () => {
                     <tr>
                       <th scope="col" style="width: 50px">No</th>
                       <th scope="col">Aksi</th>
-                      <th scope="col">Foto</th>
-                      <th scope="col">Header</th>
-                      <th scope="col">Tanggal</th>
-                      <th scope="col">Kategori</th>
-                      <th scope="col">Isi</th>
+                      <th scope="col">Foto Section Home</th>
+                      <th scope="col">Foto Section Info</th>
+                      <th scope="col">Foto Section Manfaat</th>
+                      <th scope="col">Foto Section Cara Order</th>
                       <!-- <th scope="col">Footer</th> -->
                     </tr>
                   </thead>
@@ -72,11 +71,10 @@ const toggleSidebar = () => {
                           @click="
                             setDataUpdate(
                               item.id,
-                              item.foto,
-                              item.header,
-                              item.tanggal,
-                              item.kategori,
-                              item.isi
+                              item.foto_home,
+                              item.foto_info,
+                              item.foto_manfaat,
+                              item.foto_order
                               // item.footer
                             )
                           "
@@ -85,23 +83,43 @@ const toggleSidebar = () => {
                         </button>
                         <button
                           class="btn btn-danger me-1 mb-1"
-                          @click="konfirmasi(item.id, item.header)"
+                          @click="konfirmasi(item.id)"
                         >
                           <i class="bi bi-trash3-fill"></i>
                         </button>
                       </td>
                       <td>
                         <img
-                          :src="getImageUrl(item.foto)"
-                          alt="Foto Blog"
+                          :src="getImageUrl(item.foto_home)"
+                          alt="Foto Section Home"
                           class="img-fluid"
                           style="width: 150px"
                         />
                       </td>
-                      <td>{{ item.header }}</td>
-                      <td>{{ item.tanggal }}</td>
-                      <td>{{ item.kategori }}</td>
-                      <td><div v-html="item.isi"></div></td>
+                      <td>
+                        <img
+                          :src="getImageUrl(item.foto_info)"
+                          alt="Foto Section Info"
+                          class="img-fluid"
+                          style="width: 150px"
+                        />
+                      </td>
+                      <td>
+                        <img
+                          :src="getImageUrl(item.foto_manfaat)"
+                          alt="Foto Section Manfaat"
+                          class="img-fluid"
+                          style="width: 150px"
+                        />
+                      </td>
+                      <td>
+                        <img
+                          :src="getImageUrl(item.foto_order)"
+                          alt="Foto Section Cara Order"
+                          class="img-fluid"
+                          style="width: 150px"
+                        />
+                      </td>
                       <!-- <td>{{ item.footer }}</td> -->
                     </tr>
                   </tbody>
@@ -146,52 +164,48 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="foto">Foto</label>
+              <label for="foto_home">Foto Section Home</label>
               <input
                 type="file"
                 class="form-control"
-                id="foto"
-                @change="handleCreateFileUpload"
-                ref="foto"
+                id="foto_home"
+                @change="handleInputFotoHome"
+                ref="foto_home"
               />
               <p class="text-danger">Keterangan: Ukuran foto maksimal 2 mb</p>
             </div>
             <div class="form-group">
-              <label for="header">Header</label>
+              <label for="foto_info">Foto Section Info</label>
               <input
-                type="text"
+                type="file"
                 class="form-control"
-                id="header"
-                v-model="dataCreate.header"
-                placeholder="Masukkan header"
-                required
+                id="foto_info"
+                @change="handleInputFotoInfo"
+                ref="foto_info"
               />
+              <p class="text-danger">Keterangan: Ukuran foto maksimal 2 mb</p>
             </div>
             <div class="form-group">
-              <label for="tanggal">Tanggal</label>
+              <label for="foto_manfaat">Foto Section Manfaat</label>
               <input
-                type="date"
+                type="file"
                 class="form-control"
-                id="tanggal"
-                v-model="dataCreate.tanggal"
-                placeholder="Masukkan tanggal"
-                required
+                id="foto_manfaat"
+                @change="handleInputFotoManfaat"
+                ref="foto_manfaat"
               />
+              <p class="text-danger">Keterangan: Ukuran foto maksimal 2 mb</p>
             </div>
             <div class="form-group">
-              <label for="kategori">Kategori</label>
+              <label for="foto_order">Foto Section Cara Order</label>
               <input
-                type="text"
+                type="file"
                 class="form-control"
-                id="kategori"
-                v-model="dataCreate.kategori"
-                placeholder="Masukkan kategori"
-                required
+                id="foto_order"
+                @change="handleInputFotoOrder"
+                ref="foto_order"
               />
-            </div>
-            <div class="form-group">
-              <label for="isi">Isi</label>
-              <div id="isi_create_editor" style="height: 200px"></div>
+              <p class="text-danger">Keterangan: Ukuran foto maksimal 2 mb</p>
             </div>
             <!-- <div class="form-group">
               <label for="footer">Footer</label>
@@ -244,49 +258,48 @@ const toggleSidebar = () => {
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="foto">Foto</label>
+              <label for="foto_home">Foto Section Home</label>
               <input
                 type="file"
                 class="form-control"
-                id="foto"
-                @change="handleUpdateFileUpload"
-                ref="foto"
+                id="foto_home"
+                @change="handleUpdateFotoHome"
+                ref="foto_home"
               />
               <p class="text-danger">Keterangan: Ukuran foto maksimal 2 mb</p>
             </div>
             <div class="form-group">
-              <label for="header">Header</label>
+              <label for="foto_info">Foto Section Info</label>
               <input
-                type="text"
+                type="file"
                 class="form-control"
-                id="header"
-                v-model="dataUpdate.header"
-                required
+                id="foto_info"
+                @change="handleUpdateFotoInfo"
+                ref="foto_info"
               />
+              <p class="text-danger">Keterangan: Ukuran foto maksimal 2 mb</p>
             </div>
             <div class="form-group">
-              <label for="tanggal">Tanggal</label>
+              <label for="foto_manfaat">Foto Section Manfaat</label>
               <input
-                type="date"
+                type="file"
                 class="form-control"
-                id="tanggal"
-                v-model="dataUpdate.tanggal"
-                required
+                id="foto_manfaat"
+                @change="handleUpdateFotoManfaat"
+                ref="foto_manfaat"
               />
+              <p class="text-danger">Keterangan: Ukuran foto maksimal 2 mb</p>
             </div>
             <div class="form-group">
-              <label for="kategori">Kategori</label>
+              <label for="foto_order">Foto Section Cara Order</label>
               <input
-                type="text"
+                type="file"
                 class="form-control"
-                id="kategori"
-                v-model="dataUpdate.kategori"
-                required
+                id="foto_order"
+                @change="handleUpdateFotoOrder"
+                ref="foto_order"
               />
-            </div>
-            <div class="form-group">
-              <label for="isi">Isi</label>
-              <div id="isi_update_editor" style="height: 200px"></div>
+              <p class="text-danger">Keterangan: Ukuran foto maksimal 2 mb</p>
             </div>
             <!-- <div class="form-group">
               <label for="footer">Footer</label>
@@ -319,8 +332,8 @@ import Swal from "sweetalert2";
 import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 DataTable.use(DataTablesCore);
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
+// import Quill from "quill";
+// import "quill/dist/quill.snow.css";
 
 export default {
   data() {
@@ -331,20 +344,19 @@ export default {
         // Other DataTables options
       },
       dataCreate: {
-        foto: null,
-        header: "",
-        tanggal: "",
-        kategori: "",
-        isi: "",
+        nama: "",
+        foto_home: null,
+        foto_info: null,
+        foto_manfaat: null,
+        foto_order: null,
         // footer: "",
       },
       dataUpdate: {
         id: "",
-        foto: null,
-        header: "",
-        tanggal: "",
-        kategori: "",
-        isi: "",
+        foto_home: null,
+        foto_info: null,
+        foto_manfaat: null,
+        foto_order: null,
         // footer: "",
       },
       ready: false,
@@ -352,81 +364,83 @@ export default {
   },
   mounted() {
     // Create
-    this.quillCreate = new Quill("#isi_create_editor", {
-      theme: "snow",
-      placeholder: "Masukkan isi",
-      modules: {
-        toolbar: [
-          [{ header: "1" }, { header: "2" }, { font: [] }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ align: [] }],
-          ["bold", "italic", "underline"],
-          ["link"],
-          ["blockquote", "code-block"],
-          [{ color: [] }, { background: [] }],
-          // ["image"],
-        ],
-      },
-    });
-    this.quillCreate.on("text-change", () => {
-      this.dataCreate.isi = this.quillCreate.root.innerHTML;
-    });
-
-    // Update
-    this.quillUpdate = new Quill("#isi_update_editor", {
-      theme: "snow",
-      placeholder: "Masukkan isi",
-      modules: {
-        toolbar: [
-          [{ header: "1" }, { header: "2" }, { font: [] }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ align: [] }],
-          ["bold", "italic", "underline"],
-          ["link"],
-          ["blockquote", "code-block"],
-          [{ color: [] }, { background: [] }],
-          // ["image"],
-        ],
-      },
-    });
-    this.quillUpdate.on("text-change", () => {
-      this.dataUpdate.isi = this.quillUpdate.root.innerHTML;
-    });
+    // this.quillCreate = new Quill("#isi_create_editor", {
+    //   theme: "snow",
+    //   placeholder: "Masukkan isi",
+    //   modules: {
+    //     toolbar: [
+    //       [{ header: "1" }, { header: "2" }, { font: [] }],
+    //       [{ list: "ordered" }, { list: "bullet" }],
+    //       [{ script: "sub" }, { script: "super" }],
+    //       [{ align: [] }],
+    //       ["bold", "italic", "underline"],
+    //       ["link"],
+    //       ["blockquote", "code-block"],
+    //       [{ color: [] }, { background: [] }],
+    //       // ["image"],
+    //     ],
+    //   },
+    // });
+    // this.quillCreate.on("text-change", () => {
+    //   this.dataCreate.isi = this.quillCreate.root.innerHTML;
+    // });
+    // // Update
+    // this.quillUpdate = new Quill("#isi_update_editor", {
+    //   theme: "snow",
+    //   placeholder: "Masukkan isi",
+    //   modules: {
+    //     toolbar: [
+    //       [{ header: "1" }, { header: "2" }, { font: [] }],
+    //       [{ list: "ordered" }, { list: "bullet" }],
+    //       [{ script: "sub" }, { script: "super" }],
+    //       [{ align: [] }],
+    //       ["bold", "italic", "underline"],
+    //       ["link"],
+    //       ["blockquote", "code-block"],
+    //       [{ color: [] }, { background: [] }],
+    //       // ["image"],
+    //     ],
+    //   },
+    // });
+    // this.quillUpdate.on("text-change", () => {
+    //   this.dataUpdate.isi = this.quillUpdate.root.innerHTML;
+    // });
   },
   methods: {
     setDataUpdate(
       id,
-      foto,
-      header,
-      tanggal,
-      kategori,
-      isi
+      foto_home,
+      foto_info,
+      foto_manfaat,
+      foto_order
       // footer
     ) {
       this.dataUpdate.id = id;
-      this.dataUpdate.foto = foto;
-      this.dataUpdate.header = header;
-      this.dataUpdate.tanggal = tanggal;
-      this.dataUpdate.kategori = kategori;
-      this.dataUpdate.isi = isi;
-      this.quillUpdate.root.innerHTML = this.dataUpdate.isi;
+      this.dataUpdate.foto_home = foto_home;
+      this.dataUpdate.foto_info = foto_info;
+      this.dataUpdate.foto_manfaat = foto_manfaat;
+      this.dataUpdate.foto_order = foto_order;
+      // this.quillUpdate.root.innerHTML = this.dataUpdate.isi;
       // this.dataUpdate.footer = footer;
     },
     async sendUpdateData() {
       try {
         const formData = new FormData();
-        if (this.dataUpdate.foto instanceof File) {
-          formData.append("foto", this.dataUpdate.foto);
+        if (this.dataUpdate.foto_home instanceof File) {
+          formData.append("foto_home", this.dataUpdate.foto_home);
         }
-        formData.append("header", this.dataUpdate.header);
-        formData.append("tanggal", this.dataUpdate.tanggal);
-        formData.append("kategori", this.dataUpdate.kategori);
-        formData.append("isi", this.dataUpdate.isi);
+        if (this.dataUpdate.foto_info instanceof File) {
+          formData.append("foto_info", this.dataUpdate.foto_info);
+        }
+        if (this.dataUpdate.foto_manfaat instanceof File) {
+          formData.append("foto_manfaat", this.dataUpdate.foto_manfaat);
+        }
+        if (this.dataUpdate.foto_order instanceof File) {
+          formData.append("foto_order", this.dataUpdate.foto_order);
+        }
         // formData.append("footer", this.dataUpdate.footer);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/blog/update/${
+          `${import.meta.env.VITE_API_ENDPOINT}/foto/update/${
             this.dataUpdate.id
           }`,
           formData,
@@ -440,15 +454,17 @@ export default {
         console.log(response.data); // Handle response from server
         this.dataUpdate = {
           id: "",
-          foto: null,
-          header: "",
-          tanggal: "",
-          kategori: "",
-          isi: "",
+          foto_home: null,
+          foto_info: null,
+          foto_manfaat: null,
+          foto_order: null,
           // footer: "",
         }; // Clear input field after successful submission
-        this.$refs.foto.value = "";
-        this.quillUpdate.setContents([]);
+        this.$refs.foto_home.value = "";
+        this.$refs.foto_info.value = "";
+        this.$refs.foto_manfaat.value = "";
+        this.$refs.foto_order.value = "";
+        // this.quillUpdate.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
         this.showAlert("Berhasil!", "Data berhasil diupdate.", "success");
       } catch (error) {
@@ -480,14 +496,13 @@ export default {
     async tambahData() {
       try {
         const formData = new FormData();
-        formData.append("foto", this.dataCreate.foto);
-        formData.append("header", this.dataCreate.header);
-        formData.append("tanggal", this.dataCreate.tanggal);
-        formData.append("kategori", this.dataCreate.kategori);
-        formData.append("isi", this.dataCreate.isi);
+        formData.append("foto_home", this.dataCreate.foto_home);
+        formData.append("foto_info", this.dataCreate.foto_info);
+        formData.append("foto_manfaat", this.dataCreate.foto_manfaat);
+        formData.append("foto_order", this.dataCreate.foto_order);
         // formData.append("footer", this.dataCreate.footer);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/blog/create`,
+          `${import.meta.env.VITE_API_ENDPOINT}/foto/create`,
           formData,
           {
             headers: {
@@ -498,15 +513,17 @@ export default {
         );
         console.log(response.data); // Handle response from server
         this.dataCreate = {
-          foto: null,
-          header: "",
-          tanggal: "",
-          kategori: "",
-          isi: "",
+          foto_home: null,
+          foto_info: null,
+          foto_manfaat: null,
+          foto_order: null,
           // footer: "",
         }; // Clear input field after successful submission
-        this.$refs.foto.value = "";
-        this.quillCreate.setContents([]);
+        this.$refs.foto_home.value = "";
+        this.$refs.foto_info.value = "";
+        this.$refs.foto_manfaat.value = "";
+        this.$refs.foto_order.value = "";
+        // this.quillCreate.setContents([]);
         this.fetchData(); // Reload the about data after adding a new one
         this.showAlert("Berhasil!", "Data berhasil ditambahkan.", "success");
       } catch (error) {
@@ -539,7 +556,7 @@ export default {
       this.ready = false;
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_ENDPOINT}/blog/list`,
+          `${import.meta.env.VITE_API_ENDPOINT}/foto/list`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -579,7 +596,7 @@ export default {
     async deleteData(id) {
       try {
         const response = await axios.delete(
-          `${import.meta.env.VITE_API_ENDPOINT}/blog/delete/${id}`,
+          `${import.meta.env.VITE_API_ENDPOINT}/foto/delete/${id}`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -598,9 +615,9 @@ export default {
         );
       }
     },
-    konfirmasi(id, header) {
+    konfirmasi(id) {
       Swal.fire({
-        title: `Apakah Anda yakin ingin menghapus data ${header}?`,
+        title: `Apakah Anda yakin ingin menghapus data foto?`,
         text: "Data akan dihapus jika anda menekan tombol Hapus.",
         icon: "warning",
         showCancelButton: true,
@@ -614,11 +631,29 @@ export default {
         }
       });
     },
-    handleCreateFileUpload(event) {
-      this.dataCreate.foto = event.target.files[0];
+    handleInputFotoHome(event) {
+      this.dataCreate.foto_home = event.target.files[0];
     },
-    handleUpdateFileUpload(event) {
-      this.dataUpdate.foto = event.target.files[0];
+    handleInputFotoInfo(event) {
+      this.dataCreate.foto_info = event.target.files[0];
+    },
+    handleInputFotoManfaat(event) {
+      this.dataCreate.foto_manfaat = event.target.files[0];
+    },
+    handleInputFotoOrder(event) {
+      this.dataCreate.foto_order = event.target.files[0];
+    },
+    handleUpdateFotoHome(event) {
+      this.dataUpdate.foto_home = event.target.files[0];
+    },
+    handleUpdateFotoInfo(event) {
+      this.dataUpdate.foto_info = event.target.files[0];
+    },
+    handleUpdateFotoManfaat(event) {
+      this.dataUpdate.foto_manfaat = event.target.files[0];
+    },
+    handleUpdateFotoOrder(event) {
+      this.dataUpdate.foto_order = event.target.files[0];
     },
     getImageUrl(image) {
       if (image != null) {

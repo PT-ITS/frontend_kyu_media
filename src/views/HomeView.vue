@@ -48,7 +48,24 @@ import Footer from "../components/home/Footer.vue";
           </div>
 
           <div class="col-lg-6">
-            <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
+            <div
+              v-if="foto['foto_home'] != null"
+              class="hero-image"
+              data-aos="zoom-out"
+              data-aos-delay="300"
+            >
+              <img
+                :src="getImageUrl(foto['foto_home'])"
+                alt="Hero Image"
+                class="img-fluid"
+              />
+            </div>
+            <div
+              v-if="foto['foto_home'] == null || !ready"
+              class="hero-image"
+              data-aos="zoom-out"
+              data-aos-delay="300"
+            >
               <img
                 src="/assets/img/illustration-1.webp"
                 alt="Hero Image"
@@ -67,7 +84,20 @@ import Footer from "../components/home/Footer.vue";
         <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
           <div class="tab-pane fade active show" id="features-tab-1">
             <div class="row">
-              <div class="col-lg-6 order-2 order-lg-1 text-center">
+              <div
+                v-if="foto['foto_info'] != null"
+                class="col-lg-6 order-2 order-lg-1 text-center"
+              >
+                <img
+                  :src="getImageUrl(foto['foto_info'])"
+                  alt=""
+                  class="img-fluid"
+                />
+              </div>
+              <div
+                v-if="foto['foto_info'] == null || !ready"
+                class="col-lg-6 order-2 order-lg-1 text-center"
+              >
                 <img
                   src="/assets/img/features-illustration-1.webp"
                   alt=""
@@ -217,7 +247,17 @@ import Footer from "../components/home/Footer.vue";
           </div>
 
           <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="200">
-            <div class="text-center">
+            <div v-if="foto['foto_manfaat'] != null" class="text-center">
+              <img
+                :src="getImageUrl(foto['foto_manfaat'])"
+                alt="Feature 2"
+                class="img-fluid"
+              />
+            </div>
+            <div
+              v-if="foto['foto_manfaat'] == null || !ready"
+              class="text-center"
+            >
               <img
                 src="/assets/img/features-illustration-3.webp"
                 alt="Feature 2"
@@ -839,7 +879,17 @@ import Footer from "../components/home/Footer.vue";
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row align-items-center">
           <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="200">
-            <div class="text-center">
+            <div v-if="foto['foto_order'] != null" class="text-center">
+              <img
+                :src="getImageUrl(foto['foto_order'])"
+                alt="Feature 2"
+                class="img-fluid mb-5"
+              />
+            </div>
+            <div
+              v-if="foto['foto_order'] == null || !ready"
+              class="text-center"
+            >
               <img
                 src="/assets/img/features-illustration-2.webp"
                 alt="Feature 2"
@@ -1157,6 +1207,7 @@ export default {
     return {
       activeFaqIndex: null, // Track the currently active FAQ
       // beranda: [],
+      foto: [],
       info: [],
       manfaat: [],
       keunggulan: [],
@@ -1193,6 +1244,7 @@ export default {
           }
         );
         // this.beranda = response.data.data.beranda; // Update the dataList with data from the server
+        this.foto = response.data.data.foto; // Update the dataList with data from the server
         this.info = response.data.data.info; // Update the dataList with data from the server
         this.manfaat = response.data.data.manfaat; // Update the dataList with data from the server
         this.keunggulan = response.data.data.keunggulan; // Update the dataList with data from the server
@@ -1205,6 +1257,7 @@ export default {
         this.layanan = response.data.data.layanan; // Update the dataList with data from the server
         this.kontak = response.data.data.kontak; // Update the dataList with data from the server
         // console.log(this.beranda);
+        // console.log(this.foto);
         // console.log(this.info);
         // console.log(this.manfaat);
         // console.log(this.keunggulan);
@@ -1244,29 +1297,7 @@ export default {
     },
   },
   setup() {},
-  mounted() {
-    const swiperConfig = {
-      loop: false,
-      speed: 600,
-      autoplay: {
-        delay: 5000,
-      },
-      slidesPerView: "auto",
-      pagination: {
-        el: ".swiper-pagination",
-        type: "bullets",
-        clickable: true,
-      },
-      breakpoints: {
-        320: { slidesPerView: 2, spaceBetween: 40 },
-        480: { slidesPerView: 3, spaceBetween: 60 },
-        640: { slidesPerView: 4, spaceBetween: 80 },
-        992: { slidesPerView: 6, spaceBetween: 120 },
-      },
-    };
-
-    new Swiper(".init-swiper", swiperConfig);
-  },
+  mounted() {},
   created() {
     this.fetchData();
   },
